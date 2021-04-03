@@ -1,0 +1,22 @@
+# Packages
+node_modules
+
+#Credentials
+.env*
+.env.development
+
+# eslint cache
+.eslintcache
+
+# Gatsby files
+.cache/
+public
+
+# Mac files
+.DS_Store
+
+# Add-ons
+build/Release
+
+# TypeScript typings
+typings/
