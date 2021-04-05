@@ -13,7 +13,7 @@ const Cuisines = (props) => {
             node {
               cuisineImage {
                 asset {
-                  gatsbyImageData(width: 800, height: 500 fit: CROP)
+                  gatsbyImageData(width: 800, height: 600, fit: CROP)
                 }
               }
               _id

@@ -14,6 +14,9 @@ const Recipe = ({ pageContext }) => {
   console.log(pageContext);
   return (
     <Layout>
+      <Themed.a as={Link} to="/printpage" state={node} alt="Print this page">
+        Print this page 🖨
+          </Themed.a>
       <Card
         as={"article"}
         sx={{
@@ -24,10 +27,9 @@ const Recipe = ({ pageContext }) => {
       >
         <section>
           <RecipeHeader node={node} />
+          
         </section>
-        <Link to="/printpage" state={node} alt="Print this page">
-          Print this page
-        </Link>
+        
         <Grid columns={["1fr", null, "1fr 2fr"]}>
           <div
             sx={{

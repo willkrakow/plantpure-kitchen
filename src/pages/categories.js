@@ -12,7 +12,7 @@ const Categories = (props) => {
           node {
             categoryImage {
               asset {
-                gatsbyImageData(fit: CROP, width: 800)
+                gatsbyImageData(fit: CROP, width: 800, height: 500)
               }
             }
             _id

@@ -5,12 +5,19 @@ import { jsx, Themed, Card } from 'theme-ui'
 
 const CategoryCard = ({edge}) => {
     return (
-      <Link to="/browse" state={{ fromCategory: edge.node.categoryTitle }} alt={edge.node.categoryTitle}>
+      <Link to="/browse" state={{ fromCategory: edge.node.categoryTitle }} alt={edge.node.categoryTitle} sx={{ textDecoration: 'none', '&:hover': {textDecoration: "underline"} }}>
         <article key={edge.node._id} sx={{ width: "100%" }}>
           <Card
             sx={{
               position: "relative",
-              background: "rgba(20, 20, 20, 0.9)",
+              background: "rgba(10, 10, 10, 0.8)",
+              transition: "all 0.2s ease",
+              '&:hover': {
+                background: "rgba(10, 10, 10, 0.9)",
+                'div h3': {
+                  transform: 'scale(1.1)'
+                }
+              },
             }}
           >
             <GatsbyImage

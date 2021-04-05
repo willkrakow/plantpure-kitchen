@@ -11,6 +11,13 @@ const CuisineCard = ({edge}) => {
           to="/browse"
           state={{ fromCuisine: edge.node.name }}
           alt={edge.node.name}
+          sx={{
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+              textDecorationColor: 'colors.accent',
+            },
+          }}
         >
           <Card>
             <GatsbyImage

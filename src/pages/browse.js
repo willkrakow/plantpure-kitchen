@@ -6,6 +6,7 @@ import { Themed, Grid, jsx } from "theme-ui";
 import _ from "lodash";
 import RecipeCard from "../components/RecipeCard";
 import { createHistory, globalHistory } from '@reach/router'
+import Button from "../components/button";
 // import { GatsbyImage } from 'gatsby-plugin-image'
 const Browse = (props) => {
   const [cuisineFilters, setCuisineFilters] = React.useState([]);
@@ -171,37 +172,13 @@ const Browse = (props) => {
           ))}
           <Themed.p>Category</Themed.p>
           {allSanityCategory.edges.map((edge) => (
-            <button
+            <Button
               key={edge.node._id}
               onClick={() => handleCategory(edge.node.categoryTitle)}
-              sx={{
-                border: "none",
-                cursor: "pointer",
-                p: 2,
-                display: "inline-block",
-                width: "100%",
-                my: 0,
-                textAlign: "left",
-                fontSize: 2,
-                backgroundColor: () =>
-                  categoryFilters.includes(edge.node.categoryTitle)
-                    ? "secondary"
-                    : "background",
-                color: () =>
-                  categoryFilters.includes(edge.node.categoryTitle)
-                    ? "background"
-                    : "secondary",
-                "&:hover": {
-                  backgroundColor: "hsla(173, 93%, 27%, 20%)",
-                  color: "secondary",
-                },
-                "&:focus": {
-                  outline: "none",
-                },
-              }}
+              isactive={categoryFilters.includes(edge.node.categoryTitle)}
             >
               {edge.node.categoryTitle}
-            </button>
+            </Button>
           ))}
         </section>
         <section>
