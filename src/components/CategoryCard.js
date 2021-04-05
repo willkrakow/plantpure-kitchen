@@ -21,7 +21,7 @@ const CategoryCard = ({edge}) => {
             }}
           >
             <GatsbyImage
-              sx={{ opacity: 0.2, backgroundColor: "darker", padding: 2 }}
+              sx={{ opacity: 0.2, backgroundColor: "darker", padding: 2, width: "100%" }}
               image={edge.node.categoryImage.asset.gatsbyImageData}
               alt={edge.node.categoryTitle}
             />

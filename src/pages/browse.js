@@ -182,7 +182,7 @@ const Browse = (props) => {
           ))}
         </section>
         <section>
-          <Grid columns={[2, null, 3]}>
+          <Grid columns={[1, 2, 3]}>
             {filtered.map((recipe) => (
               <RecipeCard edge={recipe} key={recipe.node._id} />
             ))}

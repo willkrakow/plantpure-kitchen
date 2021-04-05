@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
           sx={{
             position: "absolute",
             right: 0,
-            top: 2,
+            top: 4,
             textAlign: "center",
             margin: 2,
           }}

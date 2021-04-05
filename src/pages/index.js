@@ -30,7 +30,7 @@ export default function Index({ ...props }) {
       {/* Cuisine section */}
       <section sx={{ my: 6 }}>
         <Themed.h2>Cuisines</Themed.h2>
-        <Grid gap={1} columns={[2, null, 4]}>
+        <Grid gap={1} columns={[1, 2, 4]}>
           {cuisineEdges.map((edge) => (
             <CuisineCard edge={edge} key={edge.node._id} />
           ))}
@@ -39,7 +39,7 @@ export default function Index({ ...props }) {
       {/* Categories section */}
       <section sx={{ my: 6 }}>
         <Themed.h2>Categories</Themed.h2>
-        <Grid gap={1} columns={[2, null, 3]}>
+        <Grid gap={1} columns={[1, 3, 5]}>
           {categoryEdges.map((edge) => (
             <CategoryCard key={edge.node._id} edge={edge} />
           ))}
@@ -73,7 +73,7 @@ export const query = graphql`
           categoryDescription
           categoryImage {
             asset {
-              gatsbyImageData(fit: CROP, aspectRatio: 1)
+              gatsbyImageData(fit: CROP, width: 800, height: 600)
             }
           }
         }
