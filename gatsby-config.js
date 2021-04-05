@@ -15,7 +15,6 @@ module.exports = {
         apiVersion: "2021-03-25",
       },
     },
-    "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sharp",

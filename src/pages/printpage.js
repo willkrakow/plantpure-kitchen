@@ -13,7 +13,6 @@ const PrintPage = (props) => {
 
 
   const recipeState = props.location.state
-  console.log(recipeState);
   const [printText, setPrintText] = React.useState(false);
   const [printImage, setPrintImage] = React.useState(false);
   const [printGroceries, setPrintGroceries] = React.useState(false);
@@ -52,32 +51,34 @@ const PrintPage = (props) => {
           <Button sx={{ mt: 3 }} onClick={handlePrint} isactive={true}>Print!</Button>
         </div>
         <div>
-          <article sx={{ borderWidth: 3, borderStyle: "solid", borderColor: "muted", minHeight: "11in", width: "8.5in", margin: "auto" }}>
-            <div ref={componentRef} sx={{ maxWidth: "720px", margin: "auto", p: 2 }}>
-              <RecipeHeader node={recipeState} />
-              <Grid columns={printGroceries ? ['2fr 3fr', '2fr 3fr', '2fr 3fr'] : ['1fr', '1fr', '1fr']} >
-                {printGroceries &&
-                  <div sx={{
-                    borderRight: "4px solid",
-                    borderColor: "secondary",
-                  }}>
-                    <GroceryList node={recipeState} />
+          {typeof window !== 'undefined' && (
+            <article sx={{ borderWidth: 3, borderStyle: "solid", borderColor: "muted", minHeight: "11in", width: "8.5in", margin: "auto" }}>
+              <div ref={componentRef} sx={{ maxWidth: "720px", margin: "auto", p: 2 }}>
+                <RecipeHeader node={recipeState} />
+                <Grid columns={printGroceries ? ['2fr 3fr', '2fr 3fr', '2fr 3fr'] : ['1fr', '1fr', '1fr']} >
+                  {printGroceries &&
+                    <div sx={{
+                      borderRight: "4px solid",
+                      borderColor: "secondary",
+                    }}>
+                      <GroceryList node={recipeState} />
+                    </div>
+                  }
+                  <div>
+                    {printStats && (
+                      <>
+                        <RecipeStats node={recipeState} />
+                        <Themed.hr />
+                      </>
+                    )}
+                    {printImage && <div sx={{ maxWidth: "100%", maxHeight: "250px", overflow: "hidden" }}><img sx={{ maxWidth: "100%" }} src={recipeState.metadata.featuredImage.asset.url} alt={recipeState.name} /></div>}
+                    {printText && <RecipeDirections node={recipeState} />}
                   </div>
-                }
-                <div>
-                  {printStats && (
-                    <>
-                      <RecipeStats node={recipeState} />
-                      <Themed.hr />
-                    </>
-                  )}
-                  {printImage && <div sx={{ maxWidth: "100%", maxHeight: "250px", overflow: "hidden" }}><img sx={{ maxWidth: "100%" }} src={recipeState.metadata.featuredImage.asset.url} alt={recipeState.name} /></div>}
-                  {printText && <RecipeDirections node={recipeState} />}
-                </div>
-              </Grid>
-            </div>
-          </article>
-        </div>
+                </Grid>
+              </div>
+            </article>
+          )}
+           </div>
       </Grid>
 
     </Layout>
