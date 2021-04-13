@@ -10,12 +10,13 @@ const CategoryCard = ({edge}) => {
           <Card
             sx={{
               position: "relative",
-              background: "rgba(10, 10, 10, 0.8)",
-              transition: "all 0.2s ease",
+              background: "rgba(0, 20, 30, 0.8)",
+              transition: "all 0.3s ease",
               '&:hover': {
-                background: "rgba(10, 10, 10, 0.9)",
+                background: "rgba(0, 20, 30, 0.9)",
                 'div h3': {
-                  transform: 'scale(1.1)'
+                  transform: 'scale(1.1)',
+                  transition: "all 0.3s ease",
                 }
               },
             }}
@@ -35,7 +36,7 @@ const CategoryCard = ({edge}) => {
               <Themed.h3 sx={{ color: "accent", fontWeight: "heading" }}>
                 {edge.node.categoryTitle}
               </Themed.h3>
-              <Themed.p sx={{ color: "#ffffff" }}>
+              <Themed.p sx={{ color: "alwayslight" }}>
                 {edge.node.categoryDescription}
               </Themed.p>
             </div>

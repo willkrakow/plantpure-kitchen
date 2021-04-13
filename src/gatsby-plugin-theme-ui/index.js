@@ -34,6 +34,9 @@ const theme = {
     accent: "#5cf2cc",
     muted: "#8e8e8e",
     darker: "#2f2f2f",
+    alwayslight: "#ffffff",
+    boxoutline: "rgba(120, 130, 150, 0.2)",
+    hoversecond: "hsla(173, 100%, 30%, 30%)",
     modes: {
       dark: {
         text: "hsl(210, 50%, 96%)",
@@ -44,6 +47,9 @@ const theme = {
         purple: "hsl(290, 100%, 80%)",
         muted: "hsla(30, 10%, 60%, 90%)",
         darker: "hsl(210, 50%, 60%)",
+        alwayslight: "#ffffff",
+        boxoutline: "hsl(210, 50%, 20%)",
+        hoversecond: "hsla(230, 90%, 70%, 100%)"
       },
     },
   },

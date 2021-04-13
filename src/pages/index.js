@@ -1,11 +1,12 @@
 /** @jsx jsx */
-import { jsx, Grid } from "theme-ui";
-import { graphql } from "gatsby";
-import { Themed } from "theme-ui";
-import Layout from "../components/layout";
-import CuisineCard from "../components/CuisineCard";
-import RecipeCard from "../components/RecipeCard";
-import CategoryCard from "../components/CategoryCard";
+import { jsx, Grid, Themed, Flex } from "theme-ui"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/layout"
+import CuisineCard from "../components/CuisineCard"
+import RecipeCard from "../components/RecipeCard"
+import CategoryCard from "../components/CategoryCard"
+import Hero from "../components/hero"
+import Button from '../components/button'
 
 export default function Index({ ...props }) {
   const { allSanityBlogPost, allSanityCuisine, allSanityCategory } = props.data;
@@ -17,9 +18,9 @@ export default function Index({ ...props }) {
 
   return (
     <Layout>
-      <Themed.h1>PlantPure Kitchen</Themed.h1>
+      <Hero />
       {/* Recipe section */}
-      <section sx={{ my: 6 }}>
+      <section sx={{ my: 5 }}>
         <Themed.h2>Recipes</Themed.h2>
         <Grid gap={4} columns={[1, 2, 3]}>
           {recipeEdges.map((edge) => (
@@ -28,22 +29,28 @@ export default function Index({ ...props }) {
         </Grid>
       </section>
       {/* Cuisine section */}
-      <section sx={{ my: 6 }}>
+      <section sx={{ my: 5 }}>
         <Themed.h2>Cuisines</Themed.h2>
         <Grid gap={1} columns={[1, 2, 4]}>
           {cuisineEdges.map((edge) => (
             <CuisineCard edge={edge} key={edge.node._id} />
           ))}
         </Grid>
+        <Flex  sx={{ width: "8", justifyContent: "center" }}>
+          <Link to="/cuisines" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4}}><Button sx={{ textAlign: "center" }}>All cuisines</Button></Link>
+        </Flex>
       </section>
       {/* Categories section */}
-      <section sx={{ my: 6 }}>
+      <section sx={{ my: 5 }}>
         <Themed.h2>Categories</Themed.h2>
         <Grid gap={1} columns={[1, 3, 5]}>
           {categoryEdges.map((edge) => (
             <CategoryCard key={edge.node._id} edge={edge} />
           ))}
         </Grid>
+        <Flex sx={{ width: "8", justifyContent: "center" }}>
+          <Link to="/categories" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4 }}><Button sx={{ textAlign: "center" }}>All categories</Button></Link>
+        </Flex>
       </section>
     </Layout>
   );

@@ -16,7 +16,8 @@ const RecipeCard = (props) => {
           height: "100%",
           position: "relative",
           paddingBottom: 5,
-          border: "muted",
+          border: "1px solid",
+          borderColor: "boxoutline",
           boxShadow: "0px 4px 8px 1px rgba(0,0,0,0.15)",
           backgroundColor: "background",
         }}
@@ -41,8 +42,10 @@ const RecipeCard = (props) => {
             pl: 3,
             py: 2,
             "&:hover": {
-              backgroundColor: "hsla(173, 93%, 27%, 20%)",
+              backgroundColor: "hoversecond",
+              color: "text",
             },
+            transition: "all 0.3s ease"
           }}
           to={`/recipes/${edge.node.slug.current}`}
           alt={edge.node.name}

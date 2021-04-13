@@ -13,6 +13,7 @@ const CuisineCard = ({edge}) => {
           alt={edge.node.name}
           sx={{
             textDecoration: 'none',
+            transition: "all 0.3s ease",
             '&:hover': {
               textDecoration: 'underline',
               textDecorationColor: 'colors.accent',

@@ -121,9 +121,10 @@ const Browse = (props) => {
   }, [categoryFilters.length, cuisineFilters.length, props.location?.state?.fromCategory, props.location?.state?.fromCuisine])
   return (
     <Layout>
+      <Themed.h1>Browse recipes</Themed.h1>
+
       <Grid columns={[1, "1fr 3fr", "1fr 3fr"]}>
         <section>
-          <Themed.h1>Browse recipes</Themed.h1>
           <Themed.h3>Filter</Themed.h3>
           <button
             sx={{
@@ -131,6 +132,8 @@ const Browse = (props) => {
               color: "text",
               borderColor: "text",
               cursor: "pointer",
+              py: 1,
+              width: "50%",
             }}
             onClick={handleClear}
           >
@@ -138,41 +141,23 @@ const Browse = (props) => {
           </button>
           <Themed.p>Cuisine</Themed.p>
           {allSanityCuisine.edges.map((edge) => (
-            <button
+            <Button
               key={edge.node._id}
               onClick={() => handleCuisine(edge.node.name)}
               sx={{
                 border: "none",
-                cursor: "pointer",
-                p: 2,
-                display: "inline-block",
-                width: "100%",
-                my: 0,
-                textAlign: "left",
-                fontSize: 2,
-                backgroundColor: () =>
-                  cuisineFilters.includes(edge.node.name)
-                    ? "secondary"
-                    : "background",
-                color: () =>
-                  cuisineFilters.includes(edge.node.name)
-                    ? "background"
-                    : "secondary",
-                "&:hover": {
-                  backgroundColor: "hsla(173, 93%, 27%, 20%)",
-                  color: "secondary",
-                },
-                "&:focus": {
-                  outline: "none",
-                },
               }}
+              isactive={cuisineFilters.includes(edge.node.name)}
             >
               {edge.node.name}
-            </button>
+            </Button>
           ))}
           <Themed.p>Category</Themed.p>
           {allSanityCategory.edges.map((edge) => (
             <Button
+              sx={{
+                border: "none",
+              }}
               key={edge.node._id}
               onClick={() => handleCategory(edge.node.categoryTitle)}
               isactive={categoryFilters.includes(edge.node.categoryTitle)}

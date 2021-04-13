@@ -4,7 +4,8 @@ import { jsx } from 'theme-ui'
 const Button = (props) => (
     <button
         sx={{
-            border: "none",
+            border: "1px solid",
+            bordercolor: "secondary",
             cursor: "pointer",
             p: 2,
             display: "inline-block",
@@ -21,12 +22,14 @@ const Button = (props) => (
                     ? "background"
                     : "secondary",
             "&:hover": {
-                backgroundColor: "hsla(173, 93%, 27%, 20%)",
-                color: "secondary",
+                backgroundColor: "hoversecond",
+                color: "text",
+                borderColor: "transparent",
             },
             "&:focus": {
                 outline: "none",
             },
+            transition: "all 0.3s ease",
         }}    {...props}>
         {props.children}
     </button>
