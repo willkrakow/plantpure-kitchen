@@ -1,25 +1,29 @@
 /** @jsx jsx */
 import React from 'react'
-import CookingVideo from '../videos/video.mp4'
 import { jsx, Themed } from 'theme-ui'
 import { Link } from 'gatsby'
+import { GreenButton } from './button'
+import PropTypes from 'prop-types'
 
-const Hero = ({props}) => {
+const Hero = (props) => {
+    const { videoFile, title, subtitle, cta, emoji } = props;
     React.useEffect(() => {
-        const promise = videoRef.current.play()
-        if (promise !== undefined) {
-            promise.then(_ => {
-                console.log("played")
-            }).catch(error => {
-                console.log(error)
-            });
+        if (videoFile) {
+            const promise = mediaRef.current.play()
+            if (promise !== undefined) {
+                promise.then(_ => {
+                    console.log("Video played")
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
         }
-    }, [])
+    }, [videoFile])
 
-    const videoRef = React.useRef(null)
+    const mediaRef = React.useRef(null);
     return (
         <section sx={{ height: "60vh", position: "relative", width: "100vw", left: -4 }}>
-            <div sx={{ 
+            <div sx={{
                 maxHeight: "60vh",
                 overflow: "hidden",
                 position: "absolute",
@@ -32,43 +36,53 @@ const Hero = ({props}) => {
                 alignItems: "center",
                 flexWrap: "wrap",
                 flexDirection: "column",
-                }}>
-                <Themed.h1 sx={{ padding: 4, pb: 0, color: "alwayslight", display: "inline-block", width: "100%", mb: "0" }}>PlantPure <span sx={{ color: "primary" }}>Kitchen</span></Themed.h1>
-                <Themed.h3 sx={{ padding: 4, color: "alwayslight", display: "inline-block", width: "100%" }}>100% whole food, plant-based<br /> recipes for the entire family.</Themed.h3>
-                <Link to="/browse" alt="Browse recipes" sx={{ display: "inline-block", alignSelf: "flex-start", padding: 4, pt: 0 }}>
-                    <button
+            }}>
+                {cta.position === "top" && (
+                    <Link to={cta.link} alt={cta.text} sx={{ display: "inline-block", alignSelf: "flex-start", px: 4, color: "text", py: 2, textDecoration: "none" }}><span aria-label="Back" role="img" sx={{ display: "inline-block", mr: 2 }}>⬅️</span>Back</Link>
+                )}
+                {emoji && <span sx={{ fontSize: 6, alignSelf: "flex-start", ml: 4 }} aria-label={title} role="img">{emoji}</span>}
+                <Themed.h1 sx={{ px: 4, pt: 1, pb: 0, my: 0, color: "alwayslight", display: "inline-block", width: "100%" }}>{title}</Themed.h1>
+                <Themed.h3 sx={{ px: 4, py: 1, color: "alwayslight", display: "inline-block", width: "100%" }}>{subtitle}</Themed.h3>
+                {cta.position === "bottom" && (
+                    <Link to={cta.link} alt={cta.text} sx={{ display: "inline-block", alignSelf: "flex-start", padding: 4, pt: 0 }}>
+                        <GreenButton>{cta.text}</GreenButton>
+                    </Link>
+                )}
+                {videoFile && (
+                    <video muted={true} ref={mediaRef} autoPlay={false} loop={true}
                         sx={{
-                            backgroundColor: "hoversecond",
-                            color: "alwayslight",
-                            fontSize: "3",
-                            border: "none",
-                            py: 2,
-                            px: 3,
-                            cursor: "pointer",
-                            boxShadow: "0px 4px 6px rgba(0,20,30,0.2)",
-                            "&:hover": {
-                                backgroundColor: "secondary"
-                            },
-                            transition: "all 0.3s ease",
+                            width: ["250vw", "150vw", "100vw"],
+                            overflow: "hidden",
+                            position: "absolute",
+                            top: "0",
+                            zIndex: "-1",
                         }}
                     >
-                    Browse recipes
-                    </button>
-                </Link>
-                <video muted={true} ref={videoRef}  autoPlay={false} loop={true}
-                    sx={{
-                        width: ["250vw", "150vw", "100vw"],
-                        overflow: "hidden",
-                        position: "absolute",
-                        top: "0",
-                        zIndex: "-1",
-                    }}
-                >
-                    <source src={CookingVideo} type="video/mp4" />
-                </video>
+                        <source src={videoFile} type="video/mp4" />
+                    </video>
+                )}
             </div>
         </section>
     )
 }
 
-export default Hero
+export default Hero;
+
+Hero.defaultProps = {
+    title: "PlantPure Kitchen",
+    subtitle: "100% whole food, plant-based recipes for the entire family.",
+    cta: {
+        position: 'bottom',
+    },
+}
+
+Hero.propTypes = {
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    cta: PropTypes.shape({
+        link: PropTypes.string,
+        text: PropTypes.string,
+        position: PropTypes.oneOf(['top', 'bottom'])
+    }),
+    emoji: PropTypes.string,
+}

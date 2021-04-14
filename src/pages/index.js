@@ -7,6 +7,7 @@ import RecipeCard from "../components/RecipeCard"
 import CategoryCard from "../components/CategoryCard"
 import Hero from "../components/hero"
 import Button from '../components/button'
+import CookingVideo from '../videos/video.mp4'
 
 export default function Index({ ...props }) {
   const { allSanityBlogPost, allSanityCuisine, allSanityCategory } = props.data;
@@ -15,10 +16,14 @@ export default function Index({ ...props }) {
   const { edges: cuisineEdges } = allSanityCuisine;
   const { edges: categoryEdges } = allSanityCategory;
 
+  const cta = {
+    link: "/browse",
+    text: "Browse recipes",
+  }
 
   return (
     <Layout>
-      <Hero />
+      <Hero videoFile={CookingVideo} cta={cta} />
       {/* Recipe section */}
       <section sx={{ my: 5 }}>
         <Themed.h2>Recipes</Themed.h2>

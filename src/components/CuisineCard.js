@@ -8,8 +8,7 @@ const CuisineCard = ({edge}) => {
     return (
       <article key={edge.node._id} sx={{ width: "100%" }}>
         <Link
-          to="/browse"
-          state={{ fromCuisine: edge.node.name }}
+          to={`/cuisines/${edge.node.name.toLowerCase().replace(/\s+/g, "-").slice(0, 200)}`}
           alt={edge.node.name}
           sx={{
             textDecoration: 'none',

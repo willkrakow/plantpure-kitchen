@@ -35,4 +35,26 @@ const Button = (props) => (
     </button>
 )
 
-export default Button
+export const GreenButton = (props) => (
+    <button
+        {...props}
+        sx={{
+            backgroundColor: "hoversecond",
+            color: "alwayslight",
+            fontSize: "3",
+            border: "none",
+            py: 2,
+            px: 3,
+            cursor: "pointer",
+            boxShadow: "0px 4px 6px rgba(0,20,30,0.2)",
+            "&:hover": {
+                backgroundColor: "secondary"
+            },
+            transition: "all 0.3s ease",
+        }}
+    >
+        {props.children}
+    </button>
+)
+
+export default Button;

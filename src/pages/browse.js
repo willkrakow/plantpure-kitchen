@@ -5,14 +5,13 @@ import { graphql, useStaticQuery } from "gatsby";
 import { Themed, Grid, jsx } from "theme-ui";
 import _ from "lodash";
 import RecipeCard from "../components/RecipeCard";
-import { createHistory, globalHistory } from '@reach/router'
+import { globalHistory } from '@reach/router'
 import Button from "../components/button";
 // import { GatsbyImage } from 'gatsby-plugin-image'
 const Browse = (props) => {
   const [cuisineFilters, setCuisineFilters] = React.useState([]);
   const [categoryFilters, setCategoryFilters] = React.useState([]);
 
-  
   const data = useStaticQuery(graphql`
     {
       allSanityBlogPost {
@@ -116,8 +115,6 @@ const Browse = (props) => {
     if (cuisineFilters.length < 1 && globalHistory.location?.state?.fromCuisine){
         setCuisineFilters([props.location.state.fromCuisine])
     }
-      let history = createHistory(window);
-      console.log(history);
   }, [categoryFilters.length, cuisineFilters.length, props.location?.state?.fromCategory, props.location?.state?.fromCuisine])
   return (
     <Layout>
@@ -147,7 +144,7 @@ const Browse = (props) => {
               sx={{
                 border: "none",
               }}
-              isactive={cuisineFilters.includes(edge.node.name)}
+              isactive={cuisineFilters.includes(edge.node.name) ? 1 : 0}
             >
               {edge.node.name}
             </Button>
@@ -160,7 +157,7 @@ const Browse = (props) => {
               }}
               key={edge.node._id}
               onClick={() => handleCategory(edge.node.categoryTitle)}
-              isactive={categoryFilters.includes(edge.node.categoryTitle)}
+              isactive={categoryFilters.includes(edge.node.categoryTitle) ? 1 : 0}
             >
               {edge.node.categoryTitle}
             </Button>

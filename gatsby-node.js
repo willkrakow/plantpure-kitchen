@@ -1,7 +1,27 @@
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  await createBlogs(actions, graphql);
+  await createCuisines(actions, graphql);
+}
 
-  const result = await graphql(`
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === "build-html" || stage === "develop-html") {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /bad-module/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
+}
+
+
+async function createBlogs(actions, graphql) {
+  const { createPage } = actions;
+  const blogData = await graphql(`
     {
       allSanityBlogPost {
         edges {
@@ -59,35 +79,61 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `);
-
-  if (result.errors) {
-    throw result.errors
+  if (blogData.errors) {
+    throw blogData.errors;
   }
-
-  const posts = result.data.allSanityBlogPost.edges || []
+  const posts = blogData.data.allSanityBlogPost.edges || [];
   posts.forEach((edge, index) => {
-        const slug = edge.node.slug.current
-        const path = encodeURI(`/recipes/${slug}`);
-        
-        createPage({
-            path,
-            component: require.resolve('./src/templates/recipe.js'),
-            context: {slug: slug, node: edge.node},
-        })
-  })
+    const slug = edge.node.slug.current;
+    const path = encodeURI(`/recipes/${slug}`);
+    createPage({
+      path,
+      component: require.resolve('./src/templates/recipe.js'),
+      context: { slug: slug, node: edge.node },
+    });
+  });
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html" || stage === "develop-html") {
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /bad-module/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    })
+
+async function createCuisines(actions, graphql) {
+  const { createPage } = actions;
+  const cuisineData = await graphql(`
+  {
+    allSanityCuisine {
+      edges {
+        node {
+          cuisineImage {
+            asset {
+              gatsbyImageData(formats: JPG, height: 1000, width: 1000, fit: CROP)
+            }
+          }
+          emoji
+          name
+          id
+          cuisineDescription
+          slug {
+            current
+          }
+          _id
+          _key
+        }
+      }
+    }
+  }`);
+
+  if (cuisineData.errors) {
+    throw cuisineData.errors
   }
+
+  const { allSanityCuisine } = cuisineData.data;
+  allSanityCuisine.edges.forEach((edge) => {
+    const slug = edge.node?.slug?.current || edge.node.name.toLowerCase().replace(/\s+/g, "-").slice(0, 200);
+    const path = encodeURI(`/cuisines/${slug}`);
+
+    createPage({
+      path,
+      component: require.resolve(`./src/templates/cuisine.js`),
+      context: { slug: slug, node: edge.node, id: edge.node._id },
+    })
+  })
 }

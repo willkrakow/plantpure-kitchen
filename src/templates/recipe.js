@@ -12,7 +12,6 @@ import RecipeSchema from '../components/recipeSchema';
 
 const Recipe = ({ pageContext }) => {
   const { node } = pageContext;
-  console.log(pageContext);
   return (
     <Layout>
       <RecipeSchema post={node} />
