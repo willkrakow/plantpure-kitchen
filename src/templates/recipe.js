@@ -8,12 +8,14 @@ import GroceryList from '../components/groceryList';
 import RecipeDirections from '../components/recipeDirections'
 import RecipeStats from "../components/recipeStats";
 import RecipeHeader from "../components/recipeHeader";
+import RecipeSchema from '../components/recipeSchema';
 
 const Recipe = ({ pageContext }) => {
   const { node } = pageContext;
   console.log(pageContext);
   return (
     <Layout>
+      <RecipeSchema post={node} />
       <Themed.a as={Link} to="/printpage" state={node} alt="Print this page">
         Print this page 🖨
           </Themed.a>

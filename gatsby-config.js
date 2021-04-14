@@ -3,8 +3,9 @@
 module.exports = {
   siteMetadata: {
     title: "PlantPure Kitchen Recipes",
-    description:
-      "Entrées, apps, sweets, and more. 100% whole food, plant-based vegan recipes for the whole family.",
+    description: "Entrées, apps, sweets, and more. 100% whole food, plant-based vegan recipes for the whole family.",
+    image: "static/images/icon.png",
+    url: "https://plantpure-kitchen.netlify.app/",
   },
   plugins: [
     {
@@ -17,7 +18,12 @@ module.exports = {
     },
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",
-    "gatsby-plugin-sharp",
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        icon: `static/images/icon.png`,
+      },
+    },
     "gatsby-transformer-sharp",
     "gatsby-plugin-theme-ui",
     {
@@ -29,10 +35,17 @@ module.exports = {
       __key: "images",
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/static/images`,
+        name: `images`,
+      },
+    },
+    {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: "pages",
-        path: "./src/pages/",
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
       },
       __key: "pages",
     },

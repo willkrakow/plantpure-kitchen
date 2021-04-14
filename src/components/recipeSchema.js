@@ -11,10 +11,10 @@ const RecipeSchema = ({ post }) => {
       return `{
           "@type": "HowToStep",
           "name": "${step.title}",
-          "text": "${step.description}",
+          "text": "${step.description}"
       }`;
     });
-    return allSteps;
+    return allSteps
   }
       const {
         name,
@@ -31,15 +31,15 @@ const RecipeSchema = ({ post }) => {
       <script type="application/ld+json">
         {`
         {
-      "@context": "https://schema.org/",
-      "@type": "Recipe",
-      "name": "${JSON.stringify(name)}",
-      "image": [
-        ${"https://example.com/bunny"},
-      ],
-      "author": {
-        "@type": "Person",
-        "name": ${JSON.stringify(metadata.author)}
+          "@context": ${JSON.stringify("https://schema.org/")},
+          "@type": "Recipe",
+          "name": ${JSON.stringify(name)},
+          "image": [
+            "${metadata.featuredImage.asset.url}"
+          ],
+          "author": {
+          "@type": "Person",
+          "name": ${JSON.stringify(metadata.author)}
       },
       "datePublished": ${JSON.stringify(metadata.publishedDate || new Date())},
       "description": ${
@@ -50,21 +50,22 @@ const RecipeSchema = ({ post }) => {
       "totalTime": "PT${recipeInfo.prepTime + recipeInfo.cookTime}M",
       "keywords": ${JSON.stringify(metadata.keywords)},
       "recipeYield": "${recipeInfo.yield}",
-      "recipeCategory": ${JSON.stringify(recipeInfo.category)},
+      "recipeCategory": ${JSON.stringify(recipeInfo.category.categoryTitle)},
       "recipeCuisine": ${JSON.stringify(recipeInfo.cuisine.name)},
       "nutrition": {
         "@type": "NutritionInformation",
-        "calories": "${nutrition.calories} calories"
+        "calories": "${nutrition.calories.toString()} calories"
       },
       "recipeIngredient": ${JSON.stringify(ingredients)},
-      "recipeInstructions": ${parseSteps(recipeSteps)},
+      "recipeInstructions": [${parseSteps(recipeSteps)}],
       "video": {
         "@type": "VideoObject",
         "name": "${recipeVideo.Title || name}",
-        "description": "${metadata.description || "no description"}",
+        "description": "${metadata.recipeDescription || "No description"}",
         "contentUrl": ${JSON.stringify(recipeVideo.link)},
         "embedUrl": ${JSON.stringify(recipeVideo.embed)},
         "uploadDate": ${JSON.stringify(metadata.publishedDate || new Date())},
+        "thumbnailUrl": ${JSON.stringify(metadata.featuredImage.asset.url)}
       }
     }
           `}
@@ -104,12 +105,12 @@ RecipeSchema.propTypes = {
       embed: PropTypes.string,
     }),
     ingredients: PropTypes.arrayOf(PropTypes.string),
-    recipeSteps: PropTypes.shape({
-      description: PropTypes.string,
+    recipeSteps: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string,
-    }),
+      description: PropTypes.string,
+    })),
     nutrition: PropTypes.shape({
-      calories: PropTypes.string,
+      calories: PropTypes.number,
     }),
     _id: PropTypes.string,
   })

@@ -2,12 +2,13 @@
 import React from 'react'
 import { Themed, useColorMode, jsx, Flex, NavLink } from "theme-ui";
 import Footer from './footer';
+import Seo from './seo';
 
 const Layout = ({ children }) => {
   const [colorMode, setColorMode] = useColorMode();
-
   return (
     <React.Fragment>
+      <Seo />
       <header sx={{ paddingX: 4}}>
         <Flex as="nav" p={2}
         sx={{
