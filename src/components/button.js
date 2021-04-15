@@ -57,4 +57,21 @@ export const GreenButton = (props) => (
     </button>
 )
 
+export const ClearButton = (props) => (
+    <button
+    {...props}
+    sx={{
+        border: "none",
+        background: "transparent",
+        px: 0,
+        py: 0,
+        width: "100%",
+        height: "100%",
+        cursor: "pointer",
+    }}
+    >
+        {props.children}
+    </button>
+)
+
 export default Button;

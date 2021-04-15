@@ -6,6 +6,28 @@ module.exports = {
     description: "Entrées, apps, sweets, and more. 100% whole food, plant-based vegan recipes for the whole family.",
     image: "static/images/icon.png",
     url: "https://plantpure-kitchen.netlify.app/",
+    menuLinks: [
+      {
+        url: "/",
+        name: "Home",
+        emoji: "🏠",
+      },
+      {
+        url: "/cuisines",
+        name: "Cuisines",
+        emoji: "🌏",
+      },
+      {
+        url: "/categories",
+        name: "Categories",
+        emoji: "🍴",
+      },
+      {
+        url: "/browse",
+        name: "Browse",
+        emoji: "🔎",
+      },
+    ],
   },
   plugins: [
     {

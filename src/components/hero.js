@@ -22,7 +22,7 @@ const Hero = (props) => {
 
     const mediaRef = React.useRef(null);
     return (
-        <section sx={{ height: "60vh", position: "relative", width: "100vw", left: -4 }}>
+        <section sx={{ height: "60vh", position: "relative", width: "100vw", left: -3 }}>
             <div sx={{
                 maxHeight: "60vh",
                 overflow: "hidden",
@@ -33,16 +33,13 @@ const Hero = (props) => {
                 bottom: "0",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "flex-start",
                 flexWrap: "wrap",
                 flexDirection: "column",
             }}>
-                {cta.position === "top" && (
-                    <Link to={cta.link} alt={cta.text} sx={{ display: "inline-block", alignSelf: "flex-start", px: 4, color: "text", py: 2, textDecoration: "none" }}><span aria-label="Back" role="img" sx={{ display: "inline-block", mr: 2 }}>⬅️</span>Back</Link>
-                )}
                 {emoji && <span sx={{ fontSize: 6, alignSelf: "flex-start", ml: 4 }} aria-label={title} role="img">{emoji}</span>}
-                <Themed.h1 sx={{ px: 4, pt: 1, pb: 0, my: 0, color: "alwayslight", display: "inline-block", width: "100%" }}>{title}</Themed.h1>
-                <Themed.h3 sx={{ px: 4, py: 1, color: "alwayslight", display: "inline-block", width: "100%" }}>{subtitle}</Themed.h3>
+                <Themed.h1 sx={{ px: 4, pt: 1, pb: 0, my: 0, color: "alwayslight", display: "inline-block", width: "51%" }}>{title}</Themed.h1>
+                <Themed.h3 sx={{ px: 4, py: 1, color: "alwayslight", display: "inline-block", width: "51%" }}>{subtitle}</Themed.h3>
                 {cta.position === "bottom" && (
                     <Link to={cta.link} alt={cta.text} sx={{ display: "inline-block", alignSelf: "flex-start", padding: 4, pt: 0 }}>
                         <GreenButton>{cta.text}</GreenButton>

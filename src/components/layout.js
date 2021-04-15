@@ -3,18 +3,103 @@ import React from 'react'
 import { Themed, useColorMode, jsx, Flex, NavLink } from "theme-ui";
 import Footer from './footer';
 import Seo from './seo';
+import MobileHeader from './mobileHeader';
+import { useStaticQuery, graphql } from 'gatsby'
 
 const Layout = ({ children }) => {
-  const [colorMode, setColorMode] = useColorMode();
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          menuLinks {
+            emoji
+            name
+            url
+          }
+        }
+      }
+    }
+  `)
+
+  const { menuLinks } = data.site.siteMetadata;
   return (
     <React.Fragment>
       <Seo />
-      <header sx={{ paddingX: 4}}>
-        <Flex as="nav" p={2}
+      <header sx={{ paddingX: 4 }}>
+        <MobileHeader />
+        <MobileMenu links={menuLinks} />
+        <DesktopMenu links={menuLinks} />
+      </header>
+      <main sx={{ paddingX: 3 }}>{children}</main>
+      <Footer />
+    </React.Fragment>
+  );
+};
+
+export default Layout;
+
+const ColorSwitch = () => {
+  const [colorMode, setColorMode] = useColorMode();
+  return (
+    <div
+      sx={{
+        position: "absolute",
+        right: "0",
+        marginRight: 4
+      }}
+    >
+      <span sx={{ display: "inline-block", marginRight: 3, verticalAlign: "sub" }}>
+        {colorMode === "default" ? "Light" : "Dark"} mode
+          </span>
+      <button
         sx={{
-          "@media only screen and (min-width: 40em)": {
-            display: "none",
-          },
+          border: "none",
+          borderRadius: "10px",
+          textAlign: colorMode === "default" ? "left" : "right",
+          width: "50px",
+          padding: 0,
+          height: "20px",
+          transition: "all 0.3s ease",
+        }}
+        onClick={(e) => {
+          setColorMode(colorMode === "default" ? "dark" : "default");
+        }}
+      >
+        <span
+          sx={{
+            display: "inline-block",
+            borderRadius: "10px",
+            backgroundColor: "primary",
+            width: "20px",
+            height: "20px",
+          }}
+        >
+          &nbsp;
+            </span>
+      </button>
+    </div>
+  )
+}
+
+const DesktopMenu = ({links}) => {
+  return (
+    <Flex as="nav" p={2} sx={{
+      backgroundColor: "background",
+      display: ['none', 'flex', 'flex']
+    }}>
+      {links.map((link, index) => (
+        <NavLink key={index} href={link.url} alt={link.name} p={2}>{link.name}</NavLink>
+      ))}
+      <ColorSwitch />
+    </Flex>
+  )
+}
+
+const MobileMenu = ({links}) => {
+  return (
+    <Flex as="nav" p={2}
+      sx={{
+        display: ['flex', 'none', 'none'],
         position: "fixed",
         bottom: "0",
         left: "0",
@@ -25,69 +110,16 @@ const Layout = ({ children }) => {
         boxShadow: "0px -2px 4px rgba(0,0,0,0.2)",
         textAlign: "center",
         alignItems: 'center',
-        }}
-        >
-          <NavLink href="/" alt="Home" p={2} sx={{ display: "block",}}><span role="img" aria-label="Home" sx={{ width: "100%", display: "inline-block", fontSize: "4" }}>🏠</span>Home</NavLink>
-          <Themed.div sx={{ height: "24px", backgroundColor: "secondary", width: "1px", }}></Themed.div>
-          <NavLink href="/categories" alt="Home" p={2} sx={{ display: "block" }}><span role="img" aria-label="Categories" sx={{ width: "100%", display: "inline-block", fontSize: "4" }}>🍴</span>Categories</NavLink>
-          <Themed.div sx={{ height: "24px", backgroundColor: "secondary", width: "1px", }}></Themed.div>
-          <NavLink href="/cuisines" alt="Home" p={2} sx={{ display: "block" }}><span role="img" aria-label="Cuisines" sx={{ width: "100%", display: "inline-block", fontSize: "4" }}>🌏</span>Cuisines</NavLink>
-          <Themed.div sx={{ height: "24px", backgroundColor: "secondary", width: "1px", }}></Themed.div>
-          <NavLink href="/browse" alt="Home" p={2} sx={{ display: "block" }}><span role="img" aria-label="Browse" sx={{ width: "100%", display: "inline-block", fontSize: "4" }}>🔎</span>Browse</NavLink>
-
-        </Flex>
-        <Flex as="nav" p={2} sx={{
-          backgroundColor: "background",
-          "@media only screen and (max-width: 40em)": {
-            display: "none"
-          } }}>
-              <NavLink href="/" alt="Home" p={2}>Home</NavLink>
-              <NavLink href="/categories" alt="Categories" p={2}>Categories</NavLink>
-              <NavLink href="/cuisines" alt="Cuisines" p={2}>Cuisines</NavLink>
-              <NavLink href="/browse" alt="Browse" p={2}>Browse</NavLink>
-          <div
-            sx={{
-              position: "absolute",
-              right: "0",
-              marginRight: 4
-            }}
-          >
-            <span sx={{ display: "inline-block", marginRight: 3, verticalAlign: "sub"}}>
-              {colorMode === "default" ? "Light" : "Dark"} mode
+      }}
+    >
+      {links.map((link, index) => (
+          <NavLink key={index} href={link.url} alt={link.name} p={2} sx={{ display: "block", }}>
+          <span role="img" aria-label={link.name} sx={{ width: "100%", display: "inline-block", fontSize: 1 }}>
+            {link.emoji}
           </span>
-            <button
-              sx={{
-                border: "none",
-                borderRadius: "10px",
-                textAlign: colorMode === "default" ? "left" : "right",
-                width: "50px",
-                padding: 0,
-                height: "20px",
-                transition: "all 0.3s ease",
-              }}
-              onClick={(e) => {
-                setColorMode(colorMode === "default" ? "dark" : "default");
-              }}
-            >
-              <span
-                sx={{
-                  display: "inline-block",
-                  borderRadius: "10px",
-                  backgroundColor: "primary",
-                  width: "20px",
-                  height: "20px",
-                }}
-              >
-                &nbsp;
-            </span>
-            </button>
-          </div>
-        </Flex>
-      </header>
-      <main sx={{ paddingX: 4,}}>{children}</main>
-<Footer></Footer>
-    </React.Fragment>
-  );
-};
-
-export default Layout;
+          {link.name}
+        </NavLink>
+      ))}
+    </Flex>
+  )
+}

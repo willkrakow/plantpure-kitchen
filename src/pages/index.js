@@ -19,6 +19,7 @@ export default function Index({ ...props }) {
   const cta = {
     link: "/browse",
     text: "Browse recipes",
+    position: "bottom",
   }
 
   return (
@@ -63,7 +64,7 @@ export default function Index({ ...props }) {
 
 export const query = graphql`
   {
-    allSanityCuisine(limit: 8) {
+    allSanityCuisine(limit: 6) {
       edges {
         node {
           _id
@@ -77,7 +78,7 @@ export const query = graphql`
         }
       }
     }
-    allSanityCategory(limit: 6) {
+    allSanityCategory(limit: 10) {
       edges {
         node {
           _id
@@ -91,7 +92,7 @@ export const query = graphql`
         }
       }
     }
-    allSanityBlogPost(limit: 6) {
+    allSanityBlogPost(limit: 3) {
       edges {
         node {
           slug {
