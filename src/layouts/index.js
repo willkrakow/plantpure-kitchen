@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { Themed, useColorMode, jsx, Flex, NavLink } from "theme-ui";
+import { useColorMode, jsx, Flex } from "theme-ui";
 import Footer from './footer';
-import Seo from './seo';
+import Seo from '../components/seo';
 import MobileHeader from './mobileHeader';
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql, Link } from 'gatsby'
+import Button from '../components/button';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,12 +26,14 @@ const Layout = ({ children }) => {
   return (
     <React.Fragment>
       <Seo />
-      <header sx={{ paddingX: 4 }}>
+      <header sx={{ paddingX: 5, maxWidth: "100vw", margin: 'auto' }}>
         <MobileHeader />
         <MobileMenu links={menuLinks} />
         <DesktopMenu links={menuLinks} />
       </header>
-      <main sx={{ paddingX: 3 }}>{children}</main>
+      <main sx={{ paddingX: 4, position: 'relative', maxWidth: "100vw", margin: "auto" }}>
+        {children}
+      </main>
       <Footer />
     </React.Fragment>
   );
@@ -43,9 +46,10 @@ const ColorSwitch = () => {
   return (
     <div
       sx={{
-        position: "absolute",
-        right: "0",
-        marginRight: 4
+        display: 'block',
+        justifySelf: 'flex-end',
+        marginRight: '0',
+        marginLeft: 'auto'
       }}
     >
       <span sx={{ display: "inline-block", marginRight: 3, verticalAlign: "sub" }}>
@@ -83,12 +87,12 @@ const ColorSwitch = () => {
 
 const DesktopMenu = ({links}) => {
   return (
-    <Flex as="nav" p={2} sx={{
+    <Flex as="nav" py={3} sx={{
       backgroundColor: "background",
-      display: ['none', 'flex', 'flex']
+      display: ['none', 'flex', 'flex'],
     }}>
       {links.map((link, index) => (
-        <NavLink key={index} href={link.url} alt={link.name} p={2}>{link.name}</NavLink>
+        <Link key={index} to={link.url} alt={link.name} p={2} sx={{ display: 'block' }}><Button sx={{ border: 'none', display: 'block' }}>{link.name}</Button></Link>
       ))}
       <ColorSwitch />
     </Flex>
@@ -113,12 +117,12 @@ const MobileMenu = ({links}) => {
       }}
     >
       {links.map((link, index) => (
-          <NavLink key={index} href={link.url} alt={link.name} p={2} sx={{ display: "block", }}>
+          <Link key={index} to={link.url} alt={link.name} p={2} sx={{ display: "block", }}>
           <span role="img" aria-label={link.name} sx={{ width: "100%", display: "inline-block", fontSize: 1 }}>
             {link.emoji}
           </span>
           {link.name}
-        </NavLink>
+        </Link>
       ))}
     </Flex>
   )

@@ -5,7 +5,6 @@ import { jsx, Grid, Themed } from "theme-ui";
 import GroceryList from "../components/groceryList";
 import RecipeDirections from "../components/recipeDirections";
 import RecipeStats from "../components/recipeStats";
-import Layout from '../components/layout'
 import RecipeHeader from "../components/recipeHeader";
 import Button from '../components/button'
 
@@ -31,7 +30,7 @@ const PrintPage = (props) => {
 
 
   return (
-    <Layout>
+    <>
       <h1 sx={{ mb: 4 }}>Print preview</h1>
       <Grid columns={['1fr', null, '1fr 3fr']}>
         <div>
@@ -80,8 +79,7 @@ const PrintPage = (props) => {
           )}
            </div>
       </Grid>
-
-    </Layout>
+    </>
   );
 };
 

@@ -1,27 +1,30 @@
 /** @jsx jsx */
-import { jsx, Grid } from 'theme-ui';
+import React from 'react'
+import { jsx, Grid, Themed } from 'theme-ui';
 import { graphql } from 'gatsby'
-import Hero from '../components/hero'
-import Layout from '../components/layout'
-import RecipeCard from '../components/RecipeCard';
+import RecipeCard from '../components/recipeCard';
+
+const BigEmoji = ({emoji, name}) => (
+  <span aria-label={name} role="img" sx={{ display: 'inline-block', mx: 3 }}>{emoji}</span>
+)
 
 const Cuisine = ({data, ...props}) => {
     const { node: pageData } = props.pageContext;
-    console.log(data);
-    const cta = {
-        link: `/${pageData.slug}`,
-        text: `All ${pageData.name}`,
-        position: "top",
-    }
+    
     return (
-        <Layout>
-            <Hero title={pageData.name} subtitle={pageData.cuisineDescription} emoji={pageData.emoji} cta={cta} />
-            <Grid columns={['1fr', '1fr 1fr 1fr', null]} >
+        <React.Fragment>
+            <Themed.h1 sx={{ textAlign: "center" }}>
+              <BigEmoji emoji={pageData.emoji} name={pageData.name} />
+              {pageData.name}
+              <BigEmoji emoji={pageData.emoji} name={pageData.name} />
+            </Themed.h1>
+            <Themed.h2 sx={{ textAlign: "center" }}>{pageData.cuisineDescription}</Themed.h2>
+            <Grid columns={['1fr', '1fr 1fr 1fr', '1fr 1fr 1fr']} >
                 {data.allSanityBlogPost.edges.map((edge) => (
                     <RecipeCard key={edge.node._id} edge={edge} />
                 ))}
             </Grid>
-        </Layout>
+        </React.Fragment>
     )
 }
 
@@ -53,7 +56,7 @@ export const query = graphql`
             recipeDescription
             featuredImage {
               asset {
-                gatsbyImageData(fit: CROP, width: 400, height: 400, formats: JPG)
+                gatsbyImageData(fit: CROP, width: 500, height: 300, formats: JPG)
                 altText
               }
             }

@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import React from "react";
-import Layout from "../components/layout";
 import { graphql, useStaticQuery } from "gatsby";
 import { Themed, Grid, jsx } from "theme-ui";
 import _ from "lodash";
-import RecipeCard from "../components/RecipeCard";
-import { globalHistory } from '@reach/router'
+import RecipeCard from "../components/recipeCard";
 import Button from "../components/button";
-// import { GatsbyImage } from 'gatsby-plugin-image'
+import Hero from '../components/hero'
 const Browse = (props) => {
   const [cuisineFilters, setCuisineFilters] = React.useState([]);
   const [categoryFilters, setCategoryFilters] = React.useState([]);
@@ -107,19 +105,10 @@ const Browse = (props) => {
       setCategoryFilters([]);
   }
 
-  React.useEffect(() => {
-    if (categoryFilters.length < 1 && globalHistory.location?.state?.fromCategory){
-        setCategoryFilters([props.location.state.fromCategory]);
-    }
 
-    if (cuisineFilters.length < 1 && globalHistory.location?.state?.fromCuisine){
-        setCuisineFilters([props.location.state.fromCuisine])
-    }
-  }, [categoryFilters.length, cuisineFilters.length, props.location?.state?.fromCategory, props.location?.state?.fromCuisine])
   return (
-    <Layout>
-      <Themed.h1>Browse recipes</Themed.h1>
-
+    <>
+      <Hero title="Browse recipes" subtitle="Use the sidebar options to narrow down the list" emoji="🔎" />
       <Grid columns={[1, "1fr 3fr", "1fr 3fr"]}>
         <section>
           <Themed.h3>Filter</Themed.h3>
@@ -136,6 +125,7 @@ const Browse = (props) => {
           >
             Reset
           </button>
+          {/* Cuisine sorting */}
           <Themed.p>Cuisine</Themed.p>
           {allSanityCuisine.edges.map((edge) => (
             <Button
@@ -149,6 +139,7 @@ const Browse = (props) => {
               {edge.node.name}
             </Button>
           ))}
+          {/* Category sorting */}
           <Themed.p>Category</Themed.p>
           {allSanityCategory.edges.map((edge) => (
             <Button
@@ -163,6 +154,7 @@ const Browse = (props) => {
             </Button>
           ))}
         </section>
+        {/* Recipe card grid */}
         <section>
           <Grid columns={[1, 2, 3]}>
             {filtered.map((recipe) => (
@@ -171,7 +163,7 @@ const Browse = (props) => {
           </Grid>
         </section>
       </Grid>
-    </Layout>
+    </>
   );
 };
 

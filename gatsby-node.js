@@ -1,6 +1,7 @@
 exports.createPages = async ({ graphql, actions }) => {
   await createBlogs(actions, graphql);
   await createCuisines(actions, graphql);
+  await createCategories(actions, graphql);
 }
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
@@ -37,13 +38,14 @@ async function createBlogs(actions, graphql) {
               cuisine {
                 cuisineDescription
                 name
+                emoji
               }
               category {
                 categoryTitle
                 categoryDescription
                 categoryImage {
                   asset {
-                    gatsbyImageData(fit: CROP, aspectRatio: 3)
+                    gatsbyImageData(fit: CROP, aspectRatio: 3, width: 800)
                   }
                 }
               }
@@ -89,7 +91,7 @@ async function createBlogs(actions, graphql) {
     createPage({
       path,
       component: require.resolve('./src/templates/recipe.js'),
-      context: { slug: slug, node: edge.node },
+      context: { slug: slug, node: edge.node, index: index },
     });
   });
 }
@@ -137,3 +139,48 @@ async function createCuisines(actions, graphql) {
     })
   })
 }
+
+
+async function createCategories(actions, graphql) {
+  const { createPage } = actions;
+  const categoryData = await graphql(`
+  {
+    allSanityCategory {
+      edges {
+        node {
+          id
+          categoryTitle
+          categoryDescription
+          slug {
+            current
+          }
+          _id
+          _key
+          categoryImage {
+            asset {
+              gatsbyImageData(formats: JPG, fit: CROP, width: 1220, height: 500)
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+  if (categoryData.errors) {
+    throw categoryData.errors
+  }
+
+  const { allSanityCategory } = categoryData.data;
+  allSanityCategory.edges.forEach((edge) => {
+    const slug = edge.node?.slug?.current || edge.node.name.toLowerCase().replace(/\s+/g, "-").slice(0, 200);
+    const path = encodeURI(`/categories/${slug}`);
+
+    createPage({
+      path,
+      component: require.resolve(`./src/templates/category.js`),
+      context: { slug: slug, node: edge.node, id: edge.node.id },
+    })
+  })
+}
+

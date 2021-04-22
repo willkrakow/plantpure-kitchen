@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import Layout from "../components/layout";
-import { graphql, Link, useStaticQuery } from "gatsby";
-// import { GatsbyImage } from 'gatsby-plugin-image'
+import React from 'react'
+import { graphql, useStaticQuery } from "gatsby";
 import CuisineCard from '../components/CuisineCard'
 import { Grid, Themed, jsx } from 'theme-ui'
 
@@ -26,14 +25,14 @@ const Cuisines = (props) => {
     `);
     const { allSanityCuisine } = data;
   return (
-    <Layout>
+    <React.Fragment>
       <Themed.h1>Cuisines</Themed.h1>
       <Grid columns={[1, null, 3]}>
         {allSanityCuisine.edges.map((edge) => (
             <CuisineCard edge={edge} key={edge.node._id} />
         ))}
       </Grid>
-    </Layout>
+    </React.Fragment>
   );
 };
 

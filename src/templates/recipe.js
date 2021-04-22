@@ -1,19 +1,19 @@
 /** @jsx jsx */
-// import RecipeSchema from '../components/recipeSchema'
-import Layout from "../components/layout";
+import React from 'react'
 import { Card, Themed, jsx, Grid } from "theme-ui";
-import { Link } from 'gatsby'
+import { Link, } from 'gatsby'
 import RecipeImage from "../components/recipeImage";
 import GroceryList from '../components/groceryList';
 import RecipeDirections from '../components/recipeDirections'
 import RecipeStats from "../components/recipeStats";
 import RecipeHeader from "../components/recipeHeader";
 import RecipeSchema from '../components/recipeSchema';
+import RecipeDescription from '../components/recipeDescription';
 
 const Recipe = ({ pageContext }) => {
   const { node } = pageContext;
   return (
-    <Layout>
+    <React.Fragment>
       <RecipeSchema post={node} />
       <Themed.a as={Link} to="/printpage" state={node} alt="Print this page">
         Print this page 🖨
@@ -26,9 +26,11 @@ const Recipe = ({ pageContext }) => {
           padding: 3,
         }}
       >
+
         <section>
           <RecipeHeader node={node} />
-          
+          <RecipeImage node={node} />
+          <RecipeDescription text={node.metadata.recipeDescription} />
         </section>
         
         <Grid columns={["1fr", null, "1fr 2fr"]}>
@@ -43,12 +45,11 @@ const Recipe = ({ pageContext }) => {
           <div>
             <RecipeStats node={node} />
             <Themed.hr />
-            <RecipeImage node={node} />
             <RecipeDirections node={node} />
           </div>
         </Grid>
       </Card>
-    </Layout>
+    </React.Fragment>
   );
 };
 

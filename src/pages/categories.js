@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import Layout from "../components/layout";
+import React from 'react'
 import { graphql, useStaticQuery, Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Themed, Grid, jsx } from "theme-ui";
@@ -18,6 +18,9 @@ const Categories = (props) => {
             _id
             categoryDescription
             categoryTitle
+            slug {
+              current
+            }
           }
         }
       }
@@ -25,15 +28,14 @@ const Categories = (props) => {
   `);
   const { allSanityCategory } = data;
   return (
-    <Layout>
+    <React.Fragment>
       <Themed.h1>Categories</Themed.h1>
       <Grid columns={[1, 2, 3]}>
         {allSanityCategory.edges.map((edge) => (
           <Link
             key={edge.node._id}
-            to={`/browse`}
+            to={`/categories/${edge.node.slug.current}`}
             alt={edge.node.categoryTitle}
-            state={{ fromCategory: edge.node.categoryTitle }}
           >
             <GatsbyImage
               image={edge.node.categoryImage.asset.gatsbyImageData}
@@ -44,7 +46,7 @@ const Categories = (props) => {
           </Link>
         ))}
       </Grid>
-    </Layout>
+    </React.Fragment>
   );
 };
 

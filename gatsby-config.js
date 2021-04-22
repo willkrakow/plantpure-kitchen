@@ -31,6 +31,18 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `PlantPure Kitchen`,
+        short_name: `PlantPure`,
+        start_url: `/`,
+        background_color: `#fafafa`,
+        theme_color: `#60bf00`,
+        display: `standalone`,
+        icon: `src/images/icon.png`
+      },
+    },
+    {
       resolve: "gatsby-source-sanity",
       options: {
         projectId: "tddw316c",
@@ -81,5 +93,6 @@ module.exports = {
         display: "swap",
       },
     },
+    `gatsby-plugin-layout`
   ],
 };

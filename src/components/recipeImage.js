@@ -4,7 +4,7 @@ import { jsx } from 'theme-ui'
 
 const RecipeImage = ({ node }) => (
     <GatsbyImage
-        sx={{ maxWidth: 512 }}
+        sx={{ maxWidth: '100%' }}
         image={node.metadata.featuredImage.asset.gatsbyImageData}
         alt={node.name}
     />

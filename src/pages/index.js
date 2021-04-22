@@ -1,13 +1,14 @@
 /** @jsx jsx */
+import React from 'react'
 import { jsx, Grid, Themed, Flex } from "theme-ui"
 import { graphql, Link } from "gatsby"
-import Layout from "../components/layout"
 import CuisineCard from "../components/CuisineCard"
-import RecipeCard from "../components/RecipeCard"
+import RecipeCard from "../components/recipeCard"
 import CategoryCard from "../components/CategoryCard"
 import Hero from "../components/hero"
 import Button from '../components/button'
 import CookingVideo from '../videos/video.mp4'
+import { fadeIn } from '../animation'
 
 export default function Index({ ...props }) {
   const { allSanityBlogPost, allSanityCuisine, allSanityCategory } = props.data;
@@ -23,10 +24,10 @@ export default function Index({ ...props }) {
   }
 
   return (
-    <Layout>
+    <React.Fragment>
       <Hero videoFile={CookingVideo} cta={cta} />
       {/* Recipe section */}
-      <section sx={{ my: 5 }}>
+      <section sx={{ my: 5, animation: `${fadeIn} 4s 5s` }}>
         <Themed.h2>Recipes</Themed.h2>
         <Grid gap={4} columns={[1, 2, 3]}>
           {recipeEdges.map((edge) => (
@@ -35,7 +36,7 @@ export default function Index({ ...props }) {
         </Grid>
       </section>
       {/* Cuisine section */}
-      <section sx={{ my: 5 }}>
+      <section sx={{ my: 5, animationName: `${fadeIn}`, animationTimingFunction: "ease", animationDuration: "1.5s", animationDelay: "2s", }}>
         <Themed.h2>Cuisines</Themed.h2>
         <Grid gap={1} columns={[1, 2, 4]}>
           {cuisineEdges.map((edge) => (
@@ -58,7 +59,7 @@ export default function Index({ ...props }) {
           <Link to="/categories" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4 }}><Button sx={{ textAlign: "center" }}>All categories</Button></Link>
         </Flex>
       </section>
-    </Layout>
+    </React.Fragment>
   );
 }
 
@@ -98,47 +99,29 @@ export const query = graphql`
           slug {
             current
           }
-          recipeSteps {
-            description
-            title
-          }
           recipeInfo {
             cuisine {
-              cuisineDescription
               name
             }
             category {
               categoryTitle
-              categoryImage {
-                asset {
-                  gatsbyImageData(fit: CROP, aspectRatio: 3)
-                }
-              }
-              categoryDescription
             }
             cookTime
             prepTime
             yield
           }
           recipeVideo {
-            embed
             link
             videoTitle
           }
-          nutrition {
-            calories
-          }
-          ingredients
           name
           metadata {
-            author
             featuredImage {
               asset {
-                gatsbyImageData(fit: CROP, aspectRatio: 1.77)
+                gatsbyImageData(fit: CROP, width: 500, height: 300)
                 url
               }
             }
-            keywords
             publishedDate
             recipeDescription
           }

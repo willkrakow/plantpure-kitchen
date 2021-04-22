@@ -15,7 +15,7 @@ const theme = {
     heading: "Raleway, system-ui, -apple-system, sans-serif",
     monospace: "Menlo, monospace",
   },
-  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
+  fontSizes: [12, 14, 18, 24, 28, 32, 48, 64, 96],
   fontWeights: {
     light: 200,
     body: 400,
@@ -101,16 +101,15 @@ const theme = {
       mb: 4,
       px: 2,
       mt: 1,
-      textAlign: "center",
       textTransform: "uppercase",
       letterSpacing: 1,
     },
     h3: {
       variant: "text.heading",
-      fontSize: 3,
+      fontSize: 4,
       textTransform: "uppercase",
       letterSpacing: 2,
-      mb: 2,
+      mb: 3,
       mt: 2,
     },
     h4: {
@@ -121,11 +120,15 @@ const theme = {
     },
     h5: {
       variant: "text.heading",
+      color: "muted",
       fontSize: 2,
+      mt: 1,
+      mb: 1
     },
     h6: {
       variant: "text.heading",
-      fontSize: 1,
+      fontSize: 2,
+      my: 1,
     },
     p: {
       variant: "text.body",
