@@ -129,7 +129,7 @@ async function createCuisines(actions, graphql) {
 
   const { allSanityCuisine } = cuisineData.data;
   allSanityCuisine.edges.forEach((edge) => {
-    const slug = edge.node?.slug?.current || edge.node.name.toLowerCase().replace(/\s+/g, "-").slice(0, 200);
+    const slug = edge.node.slug.current;
     const path = encodeURI(`/cuisines/${slug}`);
 
     createPage({
