@@ -173,7 +173,7 @@ async function createCategories(actions, graphql) {
 
   const { allSanityCategory } = categoryData.data;
   allSanityCategory.edges.forEach((edge) => {
-    const slug = edge.node?.slug?.current || edge.node.name.toLowerCase().replace(/\s+/g, "-").slice(0, 200);
+    const slug = edge.node.slug.current;
     const path = encodeURI(`/categories/${slug}`);
 
     createPage({
