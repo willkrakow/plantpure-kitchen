@@ -2,7 +2,8 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { useLocation } from '@reach/router'
 import { useStaticQuery, graphql } from 'gatsby'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
+import { RecipeSchema } from './recipeSchema'
 
 const Seo = ({ title, description, image }) => {
     const { pathname } = useLocation()
@@ -42,13 +43,22 @@ const Seo = ({ title, description, image }) => {
             {seo.image && <meta name="twitter:image" content={seo.image} />}
         </Helmet>    )}
 
+
+Seo.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+}
+
+Seo.defaultProps = {
+  title: "PlantPure Kitchen",
+  description: "Whole food, plant-based recipes for the entire family",
+  image: "https://pexels.com/random"
+}
+
 export default Seo;
 
-// Seo.propTypes = {
-//     title: PropTypes.string,
-//     description: PropTypes.string,
-//     image: PropTypes.string,
-// }
+export { RecipeSchema }
 
 const query = graphql`
   query SEO {

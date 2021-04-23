@@ -1,28 +1,30 @@
 /** @jsx jsx */
 import { Link } from 'gatsby'
 import { GatsbyImage } from 'gatsby-plugin-image'
-import { jsx, Themed, Card } from 'theme-ui'
+import { darken } from '@theme-ui/color'
+import { jsx, Themed, Card } from 'theme-ui' 
 
 const CategoryCard = ({edge}) => {
+
     return (
-      <Link to="/browse" state={{ fromCategory: edge.node.categoryTitle }} alt={edge.node.categoryTitle} sx={{ textDecoration: 'none', '&:hover': {textDecoration: "underline"} }}>
+      <Link to={`/categories/${edge.node.slug.current}`} alt={edge.node.categoryTitle} sx={{ textDecoration: 'none' }}>
         <article key={edge.node._id} sx={{ width: "100%" }}>
           <Card
             sx={{
               position: "relative",
-              background: "rgba(0, 20, 30, 0.8)",
-              transition: "all 0.3s ease",
+              backgroundColor: darken('secondary', 0.9),
+              boxShadow: "large.primary",
               '&:hover': {
-                background: "rgba(0, 20, 30, 0.9)",
+                backgroundColor: darken('secondary', 0.2),
                 'div h3': {
                   transform: 'scale(1.1)',
-                  transition: "all 0.3s ease",
+                  transition: "primary",
                 }
               },
             }}
           >
             <GatsbyImage
-              sx={{ opacity: 0.2, backgroundColor: "darker", padding: 2, width: "100%" }}
+              sx={{ opacity: "0.3", backgroundColor: "darker", padding: 2, width: "100%" }}
               image={edge.node.categoryImage.asset.gatsbyImageData}
               alt={edge.node.categoryTitle}
             />
@@ -33,7 +35,7 @@ const CategoryCard = ({edge}) => {
                 top: "calc(50% - 32px)",
               }}
             >
-              <Themed.h3 sx={{ color: "accent", fontWeight: "heading" }}>
+              <Themed.h3 sx={{ color: "alwayslight", fontWeight: "heading" }}>
                 {edge.node.categoryTitle}
               </Themed.h3>
               <Themed.p sx={{ color: "alwayslight" }}>

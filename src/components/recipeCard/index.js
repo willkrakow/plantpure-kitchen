@@ -1,113 +1,43 @@
 /** @jsx jsx */
-import { Card, Themed, jsx, Grid } from 'theme-ui'
-import { Link } from 'gatsby'
+import React from 'react'
+import { Card, jsx, Grid, Link } from 'theme-ui'
 import { GatsbyImage } from 'gatsby-plugin-image'
 import PropTypes from 'prop-types'
+import RecipeInfoBadge from './recipeInfoBadge'
+import CuisineBadge from './cuisineBadge'
+import RecipeCardTitle from './recipeCardTitle'
+import CardButton from './cardButton'
+import { Link as GatsbyLink } from 'gatsby'
 
 const RecipeCard = (props) => {
     const { edge, fromcategory } = props;
 
-    const recipeBadgeStats = [
-        {
-            title: "Prep",
-            value: edge.node.recipeInfo.prepTime + " min.",
-            emoji: "🥘",
-        },
-        {
-            title: "Cook",
-            value: edge.node.recipeInfo.cookTime + " min.",
-            emoji: "⏲",
-        },
-        {
-            title: "Yield",
-            value: edge.node.recipeInfo.yield,
-            emoji: "🍽",
-        },
-    ]
-
     return (
-        <article
-            key={edge.node._id}
-            sx={{ width: "100%", display: "flex", flexDirection: "column" }}
-        >
-            <Card
-                sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    position: "relative",
-                    alignItems: "flex-start",
-                    border: "1px inset",
-                    borderColor: "boxoutline",
-                    boxShadow: "0px 4px 8px 1px rgba(0,0,0,0.15)",
-                    backgroundColor: "background",
-                }}
+        <React.Fragment>
+            <article
+                key={edge.node._id}
+                sx={{ width: "100%", display: "flex", flexDirection: "column" }}
             >
-                <GatsbyImage
-                    image={edge.node.metadata.featuredImage.asset.gatsbyImageData}
-                    alt={edge.node.name}
-                />
-                <div sx={{ padding: 3 }}>
-                    <Themed.h3>{edge.node.name}</Themed.h3>
-                    {fromcategory && (
-                        <CuisineBadge emoji={edge.node.recipeInfo.cuisine.emoji} name={edge.node.recipeInfo.cuisine.name} slug={edge.node.recipeInfo.cuisine.slug.current} />
-                    )}
-                    <Grid columns={[2]} gap={1} sx={{ mb: 3, rowGap: 2 }}>
-                        {recipeBadgeStats.map((stat, index) => (
-                            <RecipeInfoBadge key={index} title={stat.title} value={stat.value} emoji={stat.emoji} />
-                        ))}</Grid>
-                    <Themed.p>{edge.node.metadata.recipeDescription}</Themed.p>
-                </div>
-                <Grid columns={2} gap={0} sx={{ alignSelf: "flex-end", flex: "0 0 100%", mt: 3 }}>
-                    <Link
-                        sx={{
-                            display: "block",
-                            color: "alwayslight",
-                            fontWeight: "bold",
-                            backgroundColor: "secondary",
-                            textDecoration: "none",
-                            textAlign: "center",
-                            bottom: 0,
-                            px: 3,
-                            py: 2,
-                            "&:hover": {
-                                backgroundColor: "hoversecond",
-                            },
-                            transition: "all 0.3s ease"
-                        }}
-                        to={`/recipes/${edge.node.slug.current}`}
+                <Card sx={{ 
+                    position: 'relative',
+                 }}>
+                    <GatsbyImage
+                        image={edge.node.metadata.featuredImage.asset.gatsbyImageData}
                         alt={edge.node.name}
-                    >
-                        View recipe &rarr;
-                </Link>
-                    <Link
-                        sx={{
-                            display: "block",
-                            color: "secondary",
-                            fontWeight: "bold",
-                            textDecoration: "none",
-                            textAlign: "center",
-                            bottom: 0,
-                            px: 3,
-                            py: 2,
-                            "&:hover": {
-                                backgroundColor: "hoversecond",
-                                color: "text",
-                                textDecoration: "underline",
-                                textDecorationColor: "secondary",
-                            },
-                            transition: "all 0.3s ease"
-                        }}
-                        to={`/recipes/${edge.node.slug.current}`}
-                        alt={edge.node.name}
-                    >
-                        Watch the show &rarr;
-                </Link>
-                </Grid>
-                
-            </Card>
-        </article>
+                    />
+                    <RecipeCardTitle
+                        recipeTitle={edge.node.name}
+                        fromcategory={fromcategory}
+                        recipeInfo={edge.node.recipeInfo}
+                        recipeDescription={edge.node.metadata.recipeDescription}
+                    />
+                    <Grid columns={2} gap={0} sx={{ alignSelf: "flex-end", flex: "0 0 100%", mt: 3 }}>
+                        <Link variant="a.primary" as={GatsbyLink} to={`/recipes/${edge.node.slug.current}`} alt={`View ${edge.node.name}`}>View recipe &rarr;</Link>
+                        <Link variant="a.secondary" as={GatsbyLink} to={`/recipes/${edge.node.slug.current}`} alt={`Watch ${edge.node.name}`}>Watch now &rarr;</Link>
+                    </Grid>
+                </Card>
+            </article>
+        </React.Fragment>
     )
 }
 
@@ -163,55 +93,8 @@ RecipeCard.propTypes = {
 }
 
 
-const RecipeInfoBadge = ({ emoji, title, value }) => (
-    <div>
-        <Themed.h6 sx={{
-            color: "secondary"
-        }}>
-            <span aria-label={title} role="img" sx={{ mr: 2 }}>{emoji}</span>{title}: <span sx={{ fontWeight: 'lighter' }}>{value}</span>
-        </Themed.h6>
-    </div>
-)
-
-RecipeInfoBadge.propTypes = {
-    emoji: PropTypes.string,
-    title: PropTypes.string,
-    value: PropTypes.string,
-}
-
-const CuisineBadge = ({ emoji, name, slug }) => (
-    <Link to={`/cuisines/${slug}`} sx={{ 
-        position: 'absolute',
-        top: 2,
-        left: 2,
-        px: 3,
-        py: 2,
-        borderRadius: '18px',
-        backgroundColor: 'alwayslight',
-        textDecoration: 'none',
-        '&:hover': {
-            backgroundColor: 'secondary',
-            transform: 'scale(1.05)',
-            boxShadow: "0px 4px 8px rgba(10, 20, 25, 0.9)",
-            transition: 'all 0.2s ease',
-            'h5': {
-                color: "background",
-            }
-        }
-     }}>
-        <Themed.h5>
-            <span aria-label={name} role="img">{emoji || ''}</span>
-            {" "}
-            <span>{name}</span>
-        </Themed.h5>
-    </Link>
-)
-
-CuisineBadge.propTypes = {
-    emoji: PropTypes.string,
-    name: PropTypes.string,
-    slug: PropTypes.string,
-}
-
 
 export default RecipeCard;
+
+export { RecipeInfoBadge, CuisineBadge, RecipeCardTitle, CardButton }
+

@@ -3,9 +3,6 @@ import { Helmet } from "react-helmet";
 import PropTypes from 'prop-types';
 
 const RecipeSchema = ({ post }) => {
-
-
-
   function parseSteps(steps) {
     const allSteps = steps.map((step) => {
       return `{
@@ -74,7 +71,7 @@ const RecipeSchema = ({ post }) => {
   );
 };
 
-export default RecipeSchema
+export {RecipeSchema}
 
 RecipeSchema.propTypes = {
   post: PropTypes.shape({

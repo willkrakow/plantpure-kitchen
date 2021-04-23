@@ -2,13 +2,8 @@
 import React from 'react'
 import { Card, Themed, jsx, Grid } from "theme-ui";
 import { Link, } from 'gatsby'
-import RecipeImage from "../components/recipeImage";
-import GroceryList from '../components/groceryList';
-import RecipeDirections from '../components/recipeDirections'
-import RecipeStats from "../components/recipeStats";
-import RecipeHeader from "../components/recipeHeader";
-import RecipeSchema from '../components/recipeSchema';
-import RecipeDescription from '../components/recipeDescription';
+import { RecipeDescription, RecipeDirections, RecipeHeader, RecipeImage, RecipeStats, GroceryList } from '../components/recipeComponents'
+import { RecipeSchema } from '../components/seo'
 
 const Recipe = ({ pageContext }) => {
   const { node } = pageContext;
@@ -17,7 +12,7 @@ const Recipe = ({ pageContext }) => {
       <RecipeSchema post={node} />
       <Themed.a as={Link} to="/printpage" state={node} alt="Print this page">
         Print this page 🖨
-          </Themed.a>
+      </Themed.a>
       <Card
         as={"article"}
         sx={{
@@ -26,13 +21,11 @@ const Recipe = ({ pageContext }) => {
           padding: 3,
         }}
       >
-
         <section>
-          <RecipeHeader node={node} />
-          <RecipeImage node={node} />
+          <RecipeHeader recipeTitle={node.name} cuisineName={node.recipeInfo.cuisine.name} categoryTitle={node.recipeInfo.category.categoryTitle} />
+          <RecipeImage imageData={node.metadata.featuredImage.asset.gatsbyImageData} altText={node.name} />
           <RecipeDescription text={node.metadata.recipeDescription} />
         </section>
-        
         <Grid columns={["1fr", null, "1fr 2fr"]}>
           <div
             sx={{
@@ -40,12 +33,12 @@ const Recipe = ({ pageContext }) => {
               borderColor: [null, null, "secondary"],
             }}
           >
-          <GroceryList node={node} />
+            <GroceryList ingredients={node.ingredients} />
           </div>
           <div>
-            <RecipeStats node={node} />
+            <RecipeStats recipeInfo={node.recipeInfo} />
             <Themed.hr />
-            <RecipeDirections node={node} />
+            <RecipeDirections recipeSteps={node.recipeSteps} />
           </div>
         </Grid>
       </Card>

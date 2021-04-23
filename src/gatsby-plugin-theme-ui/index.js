@@ -7,8 +7,12 @@ import '@fontsource/raleway/700.css'
 import '@fontsource/raleway/400.css'
 
 const theme = {
-  breakpoints: ["40em", "52em", "64em"],
+  breakpoints: ["40em", "48em", "64em"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  sizes: {
+    container: '100%',
+    hero: '28em',
+  },
   fonts: {
     body:
       'Lato, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -26,17 +30,119 @@ const theme = {
     body: 1.5,
     heading: 1.125,
   },
+  cards: {
+    primary: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "flex-start",
+      boxShadow: "small.primary",
+      backgroundColor: "background",
+      borderRadius: 1,
+      transition: 'primary',
+    }
+  },
+  buttons: {
+    primary: {
+      backgroundColor: "transparent",
+      color: "secondary",
+      fontWeight: 'bold',
+      fontSize: 2,
+      borderRadius: 0,
+      py: 2,
+      px: 3,
+      cursor: "pointer",
+      boxShadow: 'small.black',
+      transition: "primary",
+      "&:hover": {
+        backgroundColor: "hoversecond",
+      },
+    },
+    secondary: {
+      background: 'transparent',
+      color: 'secondary',
+      fontSize: 2,
+      '&:hover': {
+        backgroundColor: 'hoversecond',
+      },
+    },
+  },
+  layout: {
+    container: {
+      maxWidth: '100%',
+      overflowX: 'hidden',
+      my: 5,
+    }
+  },
+  links: {
+    a: {
+      primary: {
+        display: "inline-block",
+        color: "background",
+        fontWeight: "bold",
+        fontSize: 2,
+        backgroundColor: "accent",
+        opacity: '0.8',
+        textDecoration: "none",
+        textAlign: "center",
+        py: 2,
+        px: 3,
+        transition: "primary",
+        "&:hover": {
+          opacity: '1.0',
+        },
+      },
+      secondary: {
+        display: "inline-block",
+        color: "secondary",
+        fontWeight: "bold",
+        backgroundColor: "transparent",
+        textDecoration: "none",
+        textAlign: "center",
+        fontSize: 2,
+        py: 2,
+        px: 3,
+        "&:hover": {
+          backgroundColor: "hoversecond",
+        },
+        transition: "primary"
+      }
+      
+    },
+    nav: {
+      display: 'inline-block',
+      color: "accent",
+      backgroundColor: "transparent",
+      textDecoration: "none",
+      textAlign: "center",
+      fontWeight: 'bold',
+      fontSize: 2,
+      py: 2,
+      px: 3,
+      mr: 2,
+      transition: 'primary',
+      '&:hover': {
+        backgroundColor: "accent",
+        color: "background",
+      }
+    }
+  },
+  transitions: {
+    primary: 'all 0.4s ease',
+  },
   colors: {
     text: "#565656",
     background: "#ffffff",
     primary: "#60bf00",
     secondary: "#058677",
-    accent: "#5cf2cc",
+    accent: "hsl(206, 100%, 40%)",
     muted: "#8e8e8e",
     darker: "#2f2f2f",
     alwayslight: "#ffffff",
     boxoutline: "rgba(120, 130, 150, 0.2)",
     hoversecond: "hsla(173, 100%, 30%, 30%)",
+    hoveraccent: "hsl(206, 100%, 90%)",
     modes: {
       dark: {
         text: "hsl(210, 50%, 96%)",
@@ -49,7 +155,7 @@ const theme = {
         darker: "hsl(210, 50%, 60%)",
         alwayslight: "#ffffff",
         boxoutline: "hsl(210, 50%, 20%)",
-        hoversecond: "hsla(230, 90%, 70%, 100%)"
+        hoversecond: "hsl(230deg 78% 73% / 30%)",
       },
     },
   },
@@ -66,6 +172,37 @@ const theme = {
       border: "1px solid",
       borderColor: "accent",
     },
+  },
+  borderWidths: [0, 1, 2, 4, 8],
+  radii: [0, 4, 8, 16, 32],
+  forms: {
+    input: {
+      display: 'block',
+      flexBasis: '100%',
+      border: 'none',
+      borderBottom: 'solid',
+      borderWidth: 3,
+      borderColor: 'secondary',
+      borderRadius: 1,
+      padding: 2,
+      fontSize: 3,
+      backgroundColor: 'background',
+      color: 'text',
+      boxShadow: 'small.secondary',
+    }
+  },
+  shadows: {
+    small: {
+      secondary: '0 4px 4px rgba(10, 20, 30, 0.2)',
+      primary: '0 4px 4px rgba(10, 30, 20, 0.2)',
+    },
+    medium: {
+      secondary: '0 8px 8px rgba(10, 20, 30, 0.2)',
+      primary: '0 8px 8px rgba(10, 30, 20, 0.2)',
+    },
+    large: {
+      primary: '0px 10px 6px -4px rgb(10 30 20 / 40%)',
+    }
   },
   text: {
     heading: {
@@ -92,14 +229,13 @@ const theme = {
       variant: "text.heading",
       fontSize: 6,
       color: "darker",
-      px: 2,
+      mb: 3,
     },
     h2: {
       variant: "text.heading",
       fontSize: 5,
       color: "darker",
       mb: 4,
-      px: 2,
       mt: 1,
       textTransform: "uppercase",
       letterSpacing: 1,
@@ -127,18 +263,22 @@ const theme = {
     },
     h6: {
       variant: "text.heading",
-      fontSize: 2,
+      fontSize: 1,
       my: 1,
     },
     p: {
       variant: "text.body",
       fontSize: 2,
+      color: "text",
+      fontWeight: "body",
       mt: 2,
       mb: 1,
     },
     li: {
-      variant: "text.body",
-      fontSize: 2,
+      variant: "text.heading",
+      color: "secondary",
+      fontSize: 3,
+      mb: 3
     },
     a: {
       color: "secondary",

@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Grid, Themed, Flex } from "theme-ui"
-import { graphql, Link } from "gatsby"
+import { jsx, Grid, Themed, Flex, Link, Container } from "theme-ui"
+import { graphql, Link as GatsbyLink } from "gatsby"
 import CuisineCard from "../components/CuisineCard"
 import RecipeCard from "../components/recipeCard"
 import CategoryCard from "../components/CategoryCard"
 import Hero from "../components/hero"
-import Button from '../components/button'
 import CookingVideo from '../videos/video.mp4'
-import { fadeIn } from '../animation'
+import { moveRight, moveLeft } from '../animation'
 
 export default function Index({ ...props }) {
   const { allSanityBlogPost, allSanityCuisine, allSanityCategory } = props.data;
@@ -27,38 +26,40 @@ export default function Index({ ...props }) {
     <React.Fragment>
       <Hero videoFile={CookingVideo} cta={cta} />
       {/* Recipe section */}
-      <section sx={{ my: 5, animation: `${fadeIn} 4s 5s` }}>
+      <Container as="section">
         <Themed.h2>Recipes</Themed.h2>
-        <Grid gap={4} columns={[1, 2, 3]}>
+        <Grid gap={3} columns={[1, 2, 3]} sx={{ animationName: `${moveRight}`, animationDuration: '0.5s', animationTimingFunction: 'ease', animationFillMode: 'forwards', position: 'relative' }}>
           {recipeEdges.map((edge) => (
-            <RecipeCard edge={edge} key={edge.node._id} />
+            <RecipeCard edge={edge} key={edge.node._id} fromcategory={true} />
           ))}
         </Grid>
-      </section>
+      </Container>
+
       {/* Cuisine section */}
-      <section sx={{ my: 5, animationName: `${fadeIn}`, animationTimingFunction: "ease", animationDuration: "1.5s", animationDelay: "2s", }}>
+      <Container as="section">
         <Themed.h2>Cuisines</Themed.h2>
-        <Grid gap={1} columns={[1, 2, 4]}>
+        <Grid gap={0} columns={[1, 2, 4]} sx={{ animationName: `${moveLeft}`, animationDuration: "1.5s", animationTimingFunction: "ease", animationFillMode: 'forwards', position: 'relative'  }}>
           {cuisineEdges.map((edge) => (
             <CuisineCard edge={edge} key={edge.node._id} />
           ))}
         </Grid>
         <Flex  sx={{ width: "8", justifyContent: "center" }}>
-          <Link to="/cuisines" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4}}><Button sx={{ textAlign: "center" }}>All cuisines</Button></Link>
+          <Link variant="a.primary" as={GatsbyLink} to="/cuisines" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4}}>All cuisines</Link>
         </Flex>
-      </section>
+      </Container>
+
       {/* Categories section */}
-      <section sx={{ my: 5 }}>
+      <Container as="section">
         <Themed.h2>Categories</Themed.h2>
-        <Grid gap={1} columns={[1, 3, 5]}>
+        <Grid gap={2} columns={[1, 3, 5]}>
           {categoryEdges.map((edge) => (
             <CategoryCard key={edge.node._id} edge={edge} />
           ))}
         </Grid>
         <Flex sx={{ width: "8", justifyContent: "center" }}>
-          <Link to="/categories" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4 }}><Button sx={{ textAlign: "center" }}>All categories</Button></Link>
+          <Link as={GatsbyLink} variant="a.primary" to="/categories" sx={{ display: "inline-block", flex: "0 1 200px", mt: 4 }}>All categories</Link>
         </Flex>
-      </section>
+      </Container>
     </React.Fragment>
   );
 }
@@ -76,6 +77,9 @@ export const query = graphql`
               gatsbyImageData(fit: CROP, aspectRatio: 1)
             }
           }
+          slug {
+            current
+          }
         }
       }
     }
@@ -87,8 +91,11 @@ export const query = graphql`
           categoryDescription
           categoryImage {
             asset {
-              gatsbyImageData(fit: CROP, width: 800, height: 600)
+              gatsbyImageData(fit: CROP, width: 800, height: 800)
             }
+          }
+          slug {
+            current
           }
         }
       }
@@ -102,6 +109,10 @@ export const query = graphql`
           recipeInfo {
             cuisine {
               name
+              emoji
+              slug {
+                current
+              }
             }
             category {
               categoryTitle

@@ -2,10 +2,7 @@
 import React from "react";
 import { useReactToPrint } from "react-to-print";
 import { jsx, Grid, Themed } from "theme-ui";
-import GroceryList from "../components/groceryList";
-import RecipeDirections from "../components/recipeDirections";
-import RecipeStats from "../components/recipeStats";
-import RecipeHeader from "../components/recipeHeader";
+import { GroceryList, RecipeDirections, RecipeStats, RecipeHeader} from "../components/recipeComponents";
 import Button from '../components/button'
 
 const PrintPage = (props) => {

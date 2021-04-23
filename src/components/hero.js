@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Themed } from 'theme-ui'
-import { Link } from 'gatsby'
-import { GreenButton } from './button'
+import { jsx, Themed, Link } from 'theme-ui'
+import { Link as GatsbyLink } from 'gatsby'
 import PropTypes from 'prop-types'
 import { fadeIn } from '../animation'
 
 
 const Hero = (props) => {
-    console.log(props);
-    const { videoFile, title, subtitle, cta, emoji } = props;
+    const { videoFile, title, subtitle, cta } = props;
+
     React.useEffect(() => {
         if (videoFile) {
             const promise = mediaRef.current.pause()
@@ -24,6 +23,7 @@ const Hero = (props) => {
     }, [videoFile])
 
     const mediaRef = React.useRef(null);
+
     return (
         <section sx={{ height: "60vh", position: "relative", width: "100vw", left: -4 }}>
             <Themed.div
@@ -40,21 +40,19 @@ const Hero = (props) => {
                 right: "0",
                 bottom: "0",
                 display: "flex",
-                justifyContent: "flex-end",
-                paddingBottom: "2",
+                justifyContent: "center",
                 alignItems: "flex-start",
                 flexWrap: "wrap",
                 flexDirection: "column",
             }}>
-                {emoji && <span sx={{ fontSize: 6, alignSelf: "flex-start", ml: 4 }} aria-label={title} role="img">{emoji}</span>}
-                <Themed.h1 sx={{ px: 4, pt: 1, pb: 0, my: 0, color: "alwayslight", display: "inline-block" }}>{title}</Themed.h1>
-                <br />
-                <Themed.h3 sx={{ px: 4, py: 1, color: "alwayslight", display: "inline-block" }}>{subtitle}</Themed.h3>
-                {cta.position === "bottom" && (
-                    <Link to={cta.link} alt={cta.text} sx={{ display: "inline-block", alignSelf: "flex-start", padding: 4, pt: 0 }}>
-                        <GreenButton>{cta.text}</GreenButton>
+                <div sx={{ ml: 4, px: 2, maxWidth: 'hero', margin: 'auto', textAlign: 'center' }}>
+                    <Themed.h1 sx={{ color: "alwayslight", display: "inline-block" }}>{title}</Themed.h1>
+                    <br />
+                    <Themed.h3 sx={{color: "alwayslight", display: "inline-block" }}>{subtitle}</Themed.h3>
+                    <Link as={GatsbyLink} variant="a.primary" to={cta.link} alt={cta.text}>
+                        {cta.text}
                     </Link>
-                )}
+                </div>
                 {videoFile && (
                     <video muted={true} ref={mediaRef} autoPlay={false} loop={true}
                         sx={{

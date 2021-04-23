@@ -5,10 +5,6 @@ import { graphql } from 'gatsby'
 import RecipeCard from '../components/recipeCard';
 import { GatsbyImage } from 'gatsby-plugin-image';
 
-const BigEmoji = ({ emoji, name }) => (
-    <span aria-label={name} role="img" sx={{ display: 'inline-block', mx: 3 }}>{emoji}</span>
-)
-
 const Category = ({ data, ...props }) => {
     const { node: pageData } = props.pageContext;
     const recipes = data.allSanityBlogPost.edges

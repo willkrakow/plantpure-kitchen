@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { graphql, useStaticQuery, Link } from "gatsby";
-import { GatsbyImage } from "gatsby-plugin-image";
-import { Themed, Grid, jsx } from "theme-ui";
+import { graphql, useStaticQuery } from "gatsby";
+import { Themed, Grid, jsx, Container } from "theme-ui";
+import CategoryCard from '../components/CategoryCard';
+import { moveUp } from '../animation';
 
-const Categories = (props) => {
+const Categories = () => {
   const data = useStaticQuery(graphql`
     {
       allSanityCategory {
@@ -12,7 +13,7 @@ const Categories = (props) => {
           node {
             categoryImage {
               asset {
-                gatsbyImageData(fit: CROP, width: 800, height: 500)
+                gatsbyImageData(fit: CROP, width: 800, height: 800)
               }
             }
             _id
@@ -29,23 +30,25 @@ const Categories = (props) => {
   const { allSanityCategory } = data;
   return (
     <React.Fragment>
+    <Container>
       <Themed.h1>Categories</Themed.h1>
-      <Grid columns={[1, 2, 3]}>
-        {allSanityCategory.edges.map((edge) => (
-          <Link
-            key={edge.node._id}
-            to={`/categories/${edge.node.slug.current}`}
-            alt={edge.node.categoryTitle}
-          >
-            <GatsbyImage
-              image={edge.node.categoryImage.asset.gatsbyImageData}
-              alt={edge.node.categoryTitle}
-            />
-            <Themed.h3>{edge.node.categoryTitle}</Themed.h3>
-            <Themed.p>{edge.node.categoryDescription}</Themed.p>
-          </Link>
+      <Grid columns={[1, 2, 3]} sx={{        
+        overflow: 'hidden',
+        position: 'relative'
+        }}>
+        {allSanityCategory.edges.map((edge, index) => (
+          <div key={index} sx={{
+            animationName: `${moveUp}`,
+            animationDuration: `${((index / 2) % 3).toString()}s`,
+            animationTimingFunction: 'ease-out',
+            animationFillMode: 'forwards',
+            position: 'relative',
+          }}>
+          <CategoryCard  edge={edge}  />
+          </div>
         ))}
       </Grid>
+    </Container>
     </React.Fragment>
   );
 };

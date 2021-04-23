@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { useColorMode, jsx, Flex } from "theme-ui";
+import { useColorMode, jsx, Flex, Link } from "theme-ui";
 import Footer from './footer';
 import Seo from '../components/seo';
 import MobileHeader from './mobileHeader';
-import { useStaticQuery, graphql, Link } from 'gatsby'
-import Button from '../components/button';
+import { useStaticQuery, graphql, Link as GatsbyLink } from 'gatsby'
+import Search from '../components/search';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
   return (
     <React.Fragment>
       <Seo />
-      <header sx={{ paddingX: 5, maxWidth: "100vw", margin: 'auto' }}>
+      <header sx={{ paddingX: 4, maxWidth: "100vw", margin: 'auto' }}>
         <MobileHeader />
         <MobileMenu links={menuLinks} />
         <DesktopMenu links={menuLinks} />
@@ -46,13 +46,17 @@ const ColorSwitch = () => {
   return (
     <div
       sx={{
-        display: 'block',
+        display: 'flex',
         justifySelf: 'flex-end',
-        marginRight: '0',
-        marginLeft: 'auto'
+        justifyContent: 'center',
+        alignItems: 'center',
+        placeItems: 'center',
+        marginRight: '3',
+        marginLeft: 'auto',
+        fontSize: '2',
       }}
     >
-      <span sx={{ display: "inline-block", marginRight: 3, verticalAlign: "sub" }}>
+      <span sx={{ display: "inline-block", marginRight: 3, verticalAlign: "sub", color: 'secondary', fontWeight: 'bold' }}>
         {colorMode === "default" ? "Light" : "Dark"} mode
           </span>
       <button
@@ -62,8 +66,14 @@ const ColorSwitch = () => {
           textAlign: colorMode === "default" ? "left" : "right",
           width: "50px",
           padding: 0,
+          cursor: colorMode === "default" ? "e-resize" : "w-resize",
           height: "20px",
-          transition: "all 0.3s ease",
+          transition: "primary",
+          '&:hover': {
+            'span': {
+              transform: 'scale(1.3)',
+            }
+          }
         }}
         onClick={(e) => {
           setColorMode(colorMode === "default" ? "dark" : "default");
@@ -76,6 +86,7 @@ const ColorSwitch = () => {
             backgroundColor: "primary",
             width: "20px",
             height: "20px",
+            transition: "primary",
           }}
         >
           &nbsp;
@@ -86,15 +97,25 @@ const ColorSwitch = () => {
 }
 
 const DesktopMenu = ({links}) => {
+  
   return (
     <Flex as="nav" py={3} sx={{
       backgroundColor: "background",
       display: ['none', 'flex', 'flex'],
     }}>
       {links.map((link, index) => (
-        <Link key={index} to={link.url} alt={link.name} p={2} sx={{ display: 'block' }}><Button sx={{ border: 'none', display: 'block' }}>{link.name}</Button></Link>
+        <Link
+          variant="nav"
+          as={GatsbyLink}
+          key={index}
+          to={link.url}
+          alt={link.name}
+        >
+          {link.name}
+        </Link>
       ))}
       <ColorSwitch />
+      <Search />
     </Flex>
   )
 }
