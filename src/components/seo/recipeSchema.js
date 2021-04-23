@@ -57,7 +57,7 @@ const RecipeSchema = ({ post }) => {
       "recipeInstructions": [${parseSteps(recipeSteps)}],
       "video": {
         "@type": "VideoObject",
-        "name": "${recipeVideo.Title || name}",
+        "name": "${recipeVideo.title || name}",
         "description": "${metadata.recipeDescription || "No description"}",
         "contentUrl": ${JSON.stringify(recipeVideo.link)},
         "embedUrl": ${JSON.stringify(recipeVideo.embed)},
