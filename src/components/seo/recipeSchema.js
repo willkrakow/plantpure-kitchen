@@ -17,7 +17,6 @@ const RecipeSchema = ({ post }) => {
         name,
         metadata,
         recipeInfo,
-        recipeVideo,
         ingredients,
         recipeSteps,
         nutrition,
@@ -54,18 +53,8 @@ const RecipeSchema = ({ post }) => {
         "calories": "${nutrition.calories.toString()} calories"
       },
       "recipeIngredient": ${JSON.stringify(ingredients)},
-      "recipeInstructions": [${parseSteps(recipeSteps)}],
-      "video": {
-        "@type": "VideoObject",
-        "name": "${recipeVideo.Title || name}",
-        "description": "${metadata.recipeDescription || "No description"}",
-        "contentUrl": ${JSON.stringify(recipeVideo.link)},
-        "embedUrl": ${JSON.stringify(recipeVideo.embed)},
-        "uploadDate": ${JSON.stringify(metadata.publishedDate || new Date())},
-        "thumbnailUrl": ${JSON.stringify(metadata.featuredImage.asset.url)}
-      }
-    }
-          `}
+      "recipeInstructions": [${parseSteps(recipeSteps)}]
+    }`}
       </script>
     </Helmet>
   );
@@ -95,11 +84,6 @@ RecipeSchema.propTypes = {
         categoryImage: PropTypes.object,
         categoryDescription: PropTypes.string,
       }),
-    }),
-    recipeVideo: PropTypes.shape({
-      title: PropTypes.string,
-      link: PropTypes.string,
-      embed: PropTypes.string,
     }),
     ingredients: PropTypes.arrayOf(PropTypes.string),
     recipeSteps: PropTypes.arrayOf(PropTypes.shape({
