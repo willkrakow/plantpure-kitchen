@@ -1,30 +1,40 @@
 /** @jsx jsx */
 import React from 'react'
 import { jsx, Themed, Link } from 'theme-ui'
-import { Link as GatsbyLink } from 'gatsby'
+import { Link as GatsbyLink, useStaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 import { fadeIn } from '../animation'
-
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 const Hero = (props) => {
-    const { videoFile, title, subtitle, cta } = props;
-
-    React.useEffect(() => {
-        if (videoFile) {
-            const promise = mediaRef.current.pause()
-            if (promise !== undefined) {
-                promise.then(_ => {
-                    console.log("Video played")
-                }).catch(error => {
-                    console.log(error)
-                });
-            }
+    const { title, subtitle, cta } = props;
+    const data = useStaticQuery(graphql`
+    {
+      file(name: {eq: "vegan_plate"}) {
+        childImageSharp {
+          gatsbyImageData(width: 500, quality: 100)
         }
-    }, [videoFile])
+      }
+    }
+  `)
+  console.log(data)
+    // React.useEffect(() => {
+    //     if (videoFile) {
+    //         const promise = mediaRef.current.pause()
+    //         if (promise !== undefined) {
+    //             promise.then(_ => {
+    //                 console.log("Video played")
+    //             }).catch(error => {
+    //                 console.log(error)
+    //             });
+    //         }
+    //     }
+    // }, [videoFile])
 
-    const mediaRef = React.useRef(null);
+    // const mediaRef = React.useRef(null);
 
     return (
+        <React.Fragment>
         <section sx={{ height: "60vh", position: "relative", width: "100vw", left: -4 }}>
             <Themed.div
             {...props}
@@ -45,7 +55,7 @@ const Hero = (props) => {
                 flexWrap: "wrap",
                 flexDirection: "column",
             }}>
-                <div sx={{ ml: 4, px: 2, maxWidth: 'hero', margin: 'auto', textAlign: 'center' }}>
+                <div sx={{ ml: 4, px: 2, maxWidth: 'hero', margin: 'auto', textAlign: 'left' }}>
                     <Themed.h1 sx={{ color: "alwayslight", display: "inline-block" }}>{title}</Themed.h1>
                     <br />
                     <Themed.h3 sx={{color: "alwayslight", display: "inline-block" }}>{subtitle}</Themed.h3>
@@ -53,7 +63,11 @@ const Hero = (props) => {
                         {cta.text}
                     </Link>
                 </div>
-                {videoFile && (
+                <GatsbyImage imgStyle={{
+                    WebkitFilter: 'drop-shadow(8px 8px 24px rgba(0,10,15,0.2))',
+                    filter: 'drop-shadow(5px 5px 5px rgba(0,10,15,0.2)',
+                }} image={data.file.childImageSharp.gatsbyImageData} alt="Vegan plate with sweet potatoes and caramelized onions and mushrooms." />
+                {/* {videoFile && (
                     <video muted={true} ref={mediaRef} autoPlay={false} loop={true}
                         sx={{
                             width: ["250vw", "150vw", "100vw"],
@@ -65,9 +79,10 @@ const Hero = (props) => {
                     >
                         <source src={videoFile} type="video/mp4" />
                     </video>
-                )}
+                )} */}
             </Themed.div>
         </section>
+        </React.Fragment>
     )
 }
 

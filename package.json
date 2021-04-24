@@ -15,6 +15,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@fontsource/dancing-script": "^4.2.2",
     "@fontsource/lato": "^4.2.2",
     "@fontsource/raleway": "^4.2.2",
     "@mdx-js/mdx": "^1.6.22",

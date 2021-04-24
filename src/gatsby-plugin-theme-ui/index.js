@@ -5,6 +5,7 @@ import '@fontsource/lato/300.css'
 import '@fontsource/lato/700.css'
 import '@fontsource/raleway/700.css'
 import '@fontsource/raleway/400.css'
+import '@fontsource/dancing-script'
 
 const theme = {
   breakpoints: ["40em", "48em", "64em"],
@@ -18,6 +19,7 @@ const theme = {
       'Lato, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading: "Raleway, system-ui, -apple-system, sans-serif",
     monospace: "Menlo, monospace",
+    stylized: '"Dancing Script", cursive'
   },
   fontSizes: [12, 14, 18, 24, 28, 32, 48, 64, 96],
   fontWeights: {
@@ -73,6 +75,7 @@ const theme = {
       maxWidth: '100%',
       overflowX: 'hidden',
       my: 5,
+      padding: 2,
     }
   },
   links: {
@@ -133,7 +136,8 @@ const theme = {
   },
   colors: {
     text: "#565656",
-    background: "#ffffff",
+    background: "hsl(180, 1%, 99%)",
+    backgroundEnd: 'hsl(180, 2%, 96%)',
     primary: "#60bf00",
     secondary: "#058677",
     accent: "hsl(206, 100%, 40%)",
@@ -146,7 +150,8 @@ const theme = {
     modes: {
       dark: {
         text: "hsl(210, 50%, 96%)",
-        background: "hsl(230, 25%, 18%)",
+        background: "hsl(180, 2%, 18%)",
+        backgroundEnd: 'hsl(180, 2%, 3%)',
         primary: "hsl(260, 100%, 80%)",
         secondary: "hsl(230, 100%, 80%)",
         accent: "hsl(162, 80%, 58%)",
@@ -217,6 +222,12 @@ const theme = {
       fontWeight: "body",
       color: "text",
     },
+    stylized: {
+      fontFamily: "stylized",
+      lineHeight: "heading",
+      fontWeight: "body",
+      color: "secondary",
+    }
   },
   styles: {
     root: {
@@ -232,12 +243,10 @@ const theme = {
       mb: 3,
     },
     h2: {
-      variant: "text.heading",
-      fontSize: 5,
-      color: "darker",
+      variant: "text.stylized",
+      fontSize: 7,
       mb: 4,
       mt: 1,
-      textTransform: "uppercase",
       letterSpacing: 1,
     },
     h3: {

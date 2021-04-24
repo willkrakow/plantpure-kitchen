@@ -1,6 +1,6 @@
 /**@jsx jsx */
 import React from 'react'
-import { jsx, Themed, Grid } from 'theme-ui'
+import { jsx, Themed, Grid, Flex } from 'theme-ui'
 import PropTypes from 'prop-types'
 import CuisineBadge from './cuisineBadge'
 import RecipeInfoBadge from './recipeInfoBadge'
@@ -26,24 +26,25 @@ const RecipeCardTitle = ({ recipeTitle, fromcategory, recipeInfo, recipeDescript
 
     return (
         <React.Fragment>
-        <div sx={{ padding: 3 }}>
-            <Themed.h3>{recipeTitle}</Themed.h3>
+            <Flex sx={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: 3 }} >
+                <Themed.h3 sx={{ textAlign: 'center', flex: '0 0 25%' }}>{recipeTitle}</Themed.h3>
             {fromcategory && (
                 <CuisineBadge emoji={recipeInfo.cuisine.emoji} name={recipeInfo.cuisine.name} slug={recipeInfo.cuisine.slug.current} />
             )}
-            <Grid columns={[3]} gap={1} sx={{ mb: 3, rowGap: 2 }}>
+                <Grid columns={[3]} gap={1} sx={{ mb: 3, rowGap: 2, textAlign: 'center', flex: '0 0 25%' }}>
                 {recipeBadgeStats.map((stat, index) => (
                     <RecipeInfoBadge key={index} title={stat.title} value={stat.value} emoji={stat.emoji} />
                 ))}
             </Grid>
-            <Themed.p sx={{
+            {/* <Themed.p sx={{
+                flex: '0 0 25%',
                 WebkitLineClamp: "2",
                 textOverflow: "ellipsis",
                 WebkitBoxOrient: "vertical",
                 overflow: "hidden",
                 display: "-webkit-box"
-            }} >{recipeDescription}</Themed.p>
-        </div>
+            }} >{recipeDescription}</Themed.p> */}
+        </Flex>
         </React.Fragment>
     )
 }

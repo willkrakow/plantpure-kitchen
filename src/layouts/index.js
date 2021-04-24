@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { useColorMode, jsx, Flex, Link } from "theme-ui";
+import { useColorMode, jsx, Flex, Link, useThemeUI,  } from "theme-ui";
 import Footer from './footer';
 import Seo from '../components/seo';
 import MobileHeader from './mobileHeader';
@@ -22,6 +22,12 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const context = useThemeUI()
+  React.useEffect(() => {
+    const theme = context.theme;
+    document.body.style.backgroundImage = `linear-gradient(to bottom right, ${theme.colors.background}, ${theme.colors.backgroundEnd})`
+  }, [context])
+
   const { menuLinks } = data.site.siteMetadata;
   return (
     <React.Fragment>
@@ -31,7 +37,7 @@ const Layout = ({ children }) => {
         <MobileMenu links={menuLinks} />
         <DesktopMenu links={menuLinks} />
       </header>
-      <main sx={{ paddingX: 4, position: 'relative', maxWidth: "100vw", margin: "auto" }}>
+      <main sx={{ paddingX: 4, position: 'relative', maxWidth: "100vw", margin: "auto"}}>
         {children}
       </main>
       <Footer />

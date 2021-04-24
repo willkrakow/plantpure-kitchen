@@ -8,7 +8,7 @@ const RecipeInfoBadge = ({ emoji, title, value }) => (
         <Themed.h6 sx={{
             color: "accent"
         }}>
-            {title}: <span sx={{ fontWeight: 'lighter' }}>{value}</span>
+            {title}<br /><span sx={{ fontWeight: 'lighter' }}>{value}</span>
         </Themed.h6>
     </React.Fragment>
 )

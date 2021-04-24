@@ -83,16 +83,6 @@ module.exports = {
       },
       __key: "pages",
     },
-    {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: [
-          `raleway`,
-          `lato`, // you can also specify font weights and styles
-        ],
-        display: "swap",
-      },
-    },
     `gatsby-plugin-layout`
   ],
 };
