@@ -41,8 +41,8 @@ const RecipeSchema = ({ post }) => {
       "description": ${
         JSON.stringify(metadata.recipeDescription) || "no description"
       },
-      "prepTime": "PT${recipeInfo.prepTime}M",
-      "cookTime": "PT${recipeInfo.prepTime}M",
+      "prepTime": "PT${recipeInfo.prepTime.toString()}M",
+      "cookTime": "PT${recipeInfo.cookTime.toString()}M",
       "totalTime": "PT${recipeInfo.prepTime + recipeInfo.cookTime}M",
       "keywords": ${JSON.stringify(metadata.keywords)},
       "recipeYield": "${recipeInfo.yield}",
@@ -59,8 +59,6 @@ const RecipeSchema = ({ post }) => {
     </Helmet>
   );
 };
-
-export {RecipeSchema}
 
 RecipeSchema.propTypes = {
   post: PropTypes.shape({
@@ -96,3 +94,34 @@ RecipeSchema.propTypes = {
     _id: PropTypes.string,
   })
 }
+
+
+RecipeSchema.defaultProps = {
+  post: {
+    name: 'Recipe',
+    metadata: {
+      author: 'Kim Campbell',
+      keywords: ['vegan', 'plant based'],
+    },
+    recipeInfo: {
+      cookTime: 0,
+      prepTime: 0,
+      yield: '0 servings',
+      cuisine: '',
+      category: {
+        categoryTitle: '',
+        categoryDescription: '',
+      },
+    },
+    ingredients: [''],
+    recipeSteps: [{
+      title: '',
+      description: '',
+    }],
+    nutrition: {
+      calories: '0'
+    },
+  }
+}
+
+export { RecipeSchema }
