@@ -70,24 +70,24 @@ RecipeCard.propTypes = {
                     prepTime: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
                     yield: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
                 }),
-            }),
-            recipeVideo: PropTypes.shape({
-                embed: PropTypes.string,
-                link: PropTypes.string,
-                videoTitle: PropTypes.string,
-            }),
-            nutrition: PropTypes.shape({
-                calories: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-            }),
-            ingredients: PropTypes.arrayOf(PropTypes.string),
-            name: PropTypes.string,
-            metadata: PropTypes.shape({
-                author: PropTypes.string,
-                featuredImage: PropTypes.object,
-                keywords: PropTypes.arrayOf(PropTypes.string),
-                publishedDate: PropTypes.instanceOf(Date),
-                recipeDescription: PropTypes.string,
-            }),
+                recipeVideo: PropTypes.shape({
+                    embed: PropTypes.string,
+                    link: PropTypes.string,
+                    videoTitle: PropTypes.string,
+                }),
+                nutrition: PropTypes.shape({
+                    calories: PropTypes.number,
+                }),
+                ingredients: PropTypes.arrayOf(PropTypes.string),
+                name: PropTypes.string,
+                metadata: PropTypes.shape({
+                    author: PropTypes.string,
+                    featuredImage: PropTypes.object,
+                    keywords: PropTypes.arrayOf(PropTypes.string),
+                    publishedDate: PropTypes.instanceOf(Date),
+                    recipeDescription: PropTypes.string,
+                }),
+            }), 
         }),
     }),
 }

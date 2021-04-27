@@ -5,7 +5,7 @@ import { Themed, Grid, jsx } from "theme-ui";
 import _ from "lodash";
 import RecipeCard from "../components/recipeCard";
 import Button from "../components/button";
-import Hero from '../components/hero'
+
 const Browse = (props) => {
   const [cuisineFilters, setCuisineFilters] = React.useState([]);
   const [categoryFilters, setCategoryFilters] = React.useState([]);
@@ -108,7 +108,6 @@ const Browse = (props) => {
 
   return (
     <>
-      <Hero title="Browse recipes" subtitle="Use the sidebar options to narrow down the list" emoji="🔎" />
       <Grid columns={[1, "1fr 3fr", "1fr 3fr"]}>
         <section>
           <Themed.h3>Filter</Themed.h3>

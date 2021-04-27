@@ -19,9 +19,9 @@ const RecipeSchema = ({ post }) => {
         recipeInfo,
         ingredients,
         recipeSteps,
-        nutrition,
+        nutrition
       } = post;
-
+      console.log(nutrition)
   return (
     <Helmet>
       <script type="application/ld+json">
@@ -119,7 +119,7 @@ RecipeSchema.defaultProps = {
       description: '',
     }],
     nutrition: {
-      calories: '0'
+      calories: 0,
     },
   }
 }

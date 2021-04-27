@@ -7,6 +7,7 @@ import { RecipeSchema } from '../components/seo'
 
 const Recipe = ({ pageContext }) => {
   const { node } = pageContext;
+  console.log(node)
   return (
     <React.Fragment>
       <RecipeSchema post={node} />

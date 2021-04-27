@@ -114,7 +114,7 @@ const DesktopMenu = ({links}) => {
           variant="nav"
           as={GatsbyLink}
           key={index}
-          to={link.url}
+          to={link.url || "/"}
           alt={link.name}
         >
           {link.name}
@@ -144,7 +144,7 @@ const MobileMenu = ({links}) => {
       }}
     >
       {links.map((link, index) => (
-          <Link key={index} to={link.url} alt={link.name} p={2} sx={{ display: "block", }}>
+          <Link key={index} as={GatsbyLink} to={link.url} alt={link.name} p={2} sx={{ display: "block", }}>
           <span role="img" aria-label={link.name} sx={{ width: "100%", display: "inline-block", fontSize: 1 }}>
             {link.emoji}
           </span>

@@ -57,8 +57,8 @@ RecipeStats.propTypes = {
     recipeInfo: PropTypes.shape({
         cuisine: PropTypes.object,
         category: PropTypes.object,
-        cookTime: PropTypes.string,
-        prepTime: PropTypes.string,
+        cookTime: PropTypes.number,
+        prepTime: PropTypes.number,
         yield: PropTypes.string,
     })
 }
